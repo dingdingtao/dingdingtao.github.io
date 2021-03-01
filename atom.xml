@@ -1,45 +1,364 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://dingdingtao.github.io</id>
-    <title>Gridea</title>
-    <updated>2021-03-01T01:48:01.498Z</updated>
+    <title>dingdingtao的个人静态网站</title>
+    <updated>2021-03-01T04:33:14.517Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://dingdingtao.github.io"/>
     <link rel="self" href="https://dingdingtao.github.io/atom.xml"/>
     <subtitle>温故而知新</subtitle>
     <logo>https://dingdingtao.github.io/images/avatar.png</logo>
     <icon>https://dingdingtao.github.io/favicon.ico</icon>
-    <rights>All rights reserved 2021, Gridea</rights>
+    <rights>All rights reserved 2021, dingdingtao的个人静态网站</rights>
     <entry>
-        <title type="html"><![CDATA[Hello Gridea]]></title>
-        <id>https://dingdingtao.github.io/post/hello-gridea/</id>
-        <link href="https://dingdingtao.github.io/post/hello-gridea/">
+        <title type="html"><![CDATA[Hive窗口函数]]></title>
+        <id>https://dingdingtao.github.io/post/hive-chuang-kou-han-shu/</id>
+        <link href="https://dingdingtao.github.io/post/hive-chuang-kou-han-shu/">
         </link>
-        <updated>2018-12-11T16:00:00.000Z</updated>
-        <summary type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
+        <updated>2021-03-01T02:01:09.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="ntile">NTILE</h1>
+<p>NTILE(n)，用于将分组数据按照顺序切分成n片，返回当前切片值<br>
+NTILE不支持ROWS BETWEEN，比如 NTILE(2) OVER(PARTITION BY cookieid ORDER BY createtime ROWS BETWEEN 3 PRECEDING AND CURRENT ROW)<br>
+如果切片不均匀，默认增加第一个切片的分布</p>
+<pre><code class="language-SQL">SELECT 
+cookieid,
+createtime,
+pv,
+NTILE(2) OVER(PARTITION BY cookieid ORDER BY createtime) AS rn1,	--分组内将数据分成2片
+NTILE(3) OVER(PARTITION BY cookieid ORDER BY createtime) AS rn2,  --分组内将数据分成3片
+NTILE(4) OVER(ORDER BY createtime) AS rn3        --将所有数据分成4片
+FROM lxw1234 
+ORDER BY cookieid,createtime;
+ 
+cookieid day           pv       rn1     rn2     rn3
+-------------------------------------------------
+cookie1 2015-04-10      1       1       1       1
+cookie1 2015-04-11      5       1       1       1
+cookie1 2015-04-12      7       1       1       2
+cookie1 2015-04-13      3       1       2       2
+cookie1 2015-04-14      2       2       2       3
+cookie1 2015-04-15      4       2       3       3
+cookie1 2015-04-16      4       2       3       4
+cookie2 2015-04-10      2       1       1       1
+cookie2 2015-04-11      3       1       1       1
+cookie2 2015-04-12      5       1       1       2
+cookie2 2015-04-13      6       1       2       2
+cookie2 2015-04-14      3       2       2       3
+cookie2 2015-04-15      9       2       3       4
+cookie2 2015-04-16      7       2       3       4
+</code></pre>
+<p>–比如，统计一个cookie，pv数最多的前1/3的天</p>
+<pre><code class="language-SQL">SELECT 
+cookieid,
+createtime,
+pv,
+NTILE(3) OVER(PARTITION BY cookieid ORDER BY pv DESC) AS rn 
+FROM lxw1234;
+ 
+--rn = 1 的记录，就是我们想要的结果
+ 
+cookieid day           pv       rn
+----------------------------------
+cookie1 2015-04-12      7       1
+cookie1 2015-04-11      5       1
+cookie1 2015-04-15      4       1
+cookie1 2015-04-16      4       2
+cookie1 2015-04-13      3       2
+cookie1 2015-04-14      2       3
+cookie1 2015-04-10      1       3
+cookie2 2015-04-15      9       1
+cookie2 2015-04-16      7       1
+cookie2 2015-04-13      6       1
+cookie2 2015-04-12      5       2
+cookie2 2015-04-14      3       2
+cookie2 2015-04-11      3       3
+cookie2 2015-04-10      2       3
+</code></pre>
+<h1 id="row_number">ROW_NUMBER</h1>
+<p>ROW_NUMBER() –从1开始，按照顺序，生成分组内记录的序列<br>
+–比如，按照pv降序排列，生成分组内每天的pv名次<br>
+ROW_NUMBER() 的应用场景非常多，再比如，获取分组内排序第一的记录;获取一个session中的第一条refer等。</p>
+<pre><code class="language-SQL">SELECT 
+cookieid,
+createtime,
+pv,
+ROW_NUMBER() OVER(PARTITION BY cookieid ORDER BY pv desc) AS rn 
+FROM lxw1234;
+ 
+cookieid day           pv       rn
+------------------------------------------- 
+cookie1 2015-04-12      7       1
+cookie1 2015-04-11      5       2
+cookie1 2015-04-15      4       3
+cookie1 2015-04-16      4       4
+cookie1 2015-04-13      3       5
+cookie1 2015-04-14      2       6
+cookie1 2015-04-10      1       7
+cookie2 2015-04-15      9       1
+cookie2 2015-04-16      7       2
+cookie2 2015-04-13      6       3
+cookie2 2015-04-12      5       4
+cookie2 2015-04-14      3       5
+cookie2 2015-04-11      3       6
+cookie2 2015-04-10      2       7
+</code></pre>
+<h1 id="rank-和-dense_rank">RANK 和 DENSE_RANK</h1>
+<p>—RANK() 生成数据项在分组中的排名，排名相等会在名次中留下空位<br>
+—DENSE_RANK() 生成数据项在分组中的排名，排名相等会在名次中不会留下空位</p>
+<pre><code class="language-SQL">SELECT 
+cookieid,
+createtime,
+pv,
+RANK() OVER(PARTITION BY cookieid ORDER BY pv desc) AS rn1,
+DENSE_RANK() OVER(PARTITION BY cookieid ORDER BY pv desc) AS rn2,
+ROW_NUMBER() OVER(PARTITION BY cookieid ORDER BY pv DESC) AS rn3 
+FROM lxw1234 
+WHERE cookieid = 'cookie1';
+ 
+cookieid day           pv       rn1     rn2     rn3 
+-------------------------------------------------- 
+cookie1 2015-04-12      7       1       1       1
+cookie1 2015-04-11      5       2       2       2
+cookie1 2015-04-15      4       3       3       3
+cookie1 2015-04-16      4       3       3       4
+cookie1 2015-04-13      3       5       4       5
+cookie1 2015-04-14      2       6       5       6
+cookie1 2015-04-10      1       7       6       7
+ 
+rn1: 15号和16号并列第3, 13号排第5
+rn2: 15号和16号并列第3, 13号排第4
+rn3: 如果相等，则按记录值排序，生成唯一的次序，如果所有记录值都相等，或许会随机排吧。
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Hive内置函数]]></title>
+        <id>https://dingdingtao.github.io/post/hive-nei-zhi-han-shu/</id>
+        <link href="https://dingdingtao.github.io/post/hive-nei-zhi-han-shu/">
+        </link>
+        <updated>2021-03-01T02:00:03.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="内置函数">内置函数</h2>
+<table>
+<thead>
+<tr>
+<th>返回类型</th>
+<th>签名</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BIGINT</td>
+<td>round(double a)</td>
+<td>返回BIGINT最近的double值</td>
+</tr>
+<tr>
+<td>BIGINT</td>
+<td>floor(double a)</td>
+<td>返回最大BIGINT值等于或小于double</td>
+</tr>
+<tr>
+<td>BIGINT</td>
+<td>ceil(double a)</td>
+<td>返回最小BIGINT值等于或大于double</td>
+</tr>
+<tr>
+<td>DOUBLE</td>
+<td>rand(),rand(int seed)</td>
+<td>它返回一个随机数，从行改变到行</td>
+</tr>
+<tr>
+<td>STRING</td>
+<td>concat(string A,string B,...)</td>
+<td>它返回从A后串联B产生的字符串</td>
+</tr>
+<tr>
+<td>STRING</td>
+<td>substr(string A,int start)</td>
+<td>它返回一个起始，从起始位置的子字符串，直到A结束</td>
+</tr>
+<tr>
+<td>STRING</td>
+<td>substr(string A, int start, int length)</td>
+<td>返回从给定长度的起始start位置开始的字符串</td>
+</tr>
+<tr>
+<td>STRING</td>
+<td>upper(string A)</td>
+<td>它返回从转换的所有字符为大写产生的字符串</td>
+</tr>
+<tr>
+<td>STRING</td>
+<td>ucase(string A)</td>
+<td>和上面的一样</td>
+</tr>
+<tr>
+<td>STRING</td>
+<td>lower(string A)</td>
+<td>它返回转换B的所有字符为小写产生的字符串</td>
+</tr>
+<tr>
+<td>STRING</td>
+<td>lcase(string A)</td>
+<td>和上面的一样</td>
+</tr>
+<tr>
+<td>STRING</td>
+<td>trim(string A)</td>
+<td>它返回字符串从A.两端修剪空格的结果</td>
+</tr>
+<tr>
+<td>STRING</td>
+<td>ltrim(string A)</td>
+<td>它返回A从一开始修整空格产生的字符串(左手侧)</td>
+</tr>
+<tr>
+<td>STRING</td>
+<td>rtrim(string A)</td>
+<td>它返回A从结束修整空格产生的字符串(右侧)</td>
+</tr>
+<tr>
+<td>STRING</td>
+<td>regexp_replace(string A, string B, string C)</td>
+<td>它返回从替换所有子在B结果配合C.在Java正则表达式语法的字符串</td>
+</tr>
+<tr>
+<td>INT</td>
+<td>size(Map&lt;K,V&gt;)</td>
+<td>它返回在映射类型的元素的数量</td>
+</tr>
+<tr>
+<td>INT</td>
+<td>size(Array<T>)</td>
+<td>它返回在数组类型元素的数量</td>
+</tr>
+<tr>
+<td>value of <type></td>
+<td>cast(<expr> as <type>)</td>
+<td>它把表达式的结果expr&lt;类型&gt;如cast('1'作为BIGINT)代表整体转换为字符串'1'。如果转换不成功，返回的是NULL</td>
+</tr>
+<tr>
+<td>STRING</td>
+<td>from_unixtime(int unixtime)</td>
+<td>转换的秒数从Unix纪元(1970-01-0100:00:00 UTC)代表那一刻，在当前系统时区的时间戳字符的串格式：&quot;1970-01-01 00:00:00&quot;</td>
+</tr>
+<tr>
+<td>STRING</td>
+<td>to_date(string timestamp)</td>
+<td>返回一个字符串时间戳的日期部分：to_date(&quot;1970-01-01 00:00:00&quot;) = &quot;1970-01-01&quot;</td>
+</tr>
+<tr>
+<td>INT</td>
+<td>year(string date)</td>
+<td>返回年份部分的日期或时间戳字符串：year(&quot;1970-01-01 00:00:00&quot;) = 1970, year(&quot;1970-01-01&quot;) = 1970</td>
+</tr>
+<tr>
+<td>INT</td>
+<td>month(string date)</td>
+<td>返回日期或时间戳记字符串月份部分：month(&quot;1970-11-01 00:00:00&quot;) = 11, month(&quot;1970-11-01&quot;) = 11</td>
+</tr>
+<tr>
+<td>INT</td>
+<td>day(string date)</td>
+<td>返回日期或时间戳记字符串当天部分：day(&quot;1970-11-01 00:00:00&quot;) = 1, day(&quot;1970-11-01&quot;) = 1</td>
+</tr>
+<tr>
+<td>STRING</td>
+<td>get_json_object(string json_string, string path)</td>
+<td>提取从基于指定的JSON路径的JSON字符串JSON对象，并返回提取的JSON字符串的JSON对象。如果输入的JSON字符串无效，返回NULL</td>
+</tr>
+</tbody>
+</table>
+<h2 id="聚合函数">聚合函数</h2>
+<table>
+<thead>
+<tr>
+<th>返回类型</th>
+<th>签名</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BIGINT</td>
+<td>count(*), count(expr)</td>
+<td>返回检索行的总数</td>
+</tr>
+<tr>
+<td>DOUBLE</td>
+<td>sum(col), sum(DISTINCT col)</td>
+<td>返回该组或该组中的列的不同值的分组和所有元素的总和</td>
+</tr>
+<tr>
+<td>DOUBLE</td>
+<td>avg(col), avg(DISTINCT col)</td>
+<td>返回上述组或该组中的列的不同值的元素的平均值</td>
+</tr>
+<tr>
+<td>DOUBLE</td>
+<td>min(col)</td>
+<td>返回该组中的列的最小值</td>
+</tr>
+<tr>
+<td>DOUBLE</td>
+<td>max(col)</td>
+<td>返回该组中的列的最大值</td>
+</tr>
+</tbody>
+</table>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Hive列转行]]></title>
+        <id>https://dingdingtao.github.io/post/hive-lie-zhuan-hang/</id>
+        <link href="https://dingdingtao.github.io/post/hive-lie-zhuan-hang/">
+        </link>
+        <updated>2021-03-01T01:58:46.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="列转行">列转行</h1>
+<h2 id="collect_set">collect_set</h2>
+<p>concat_ws(',',collect_set(column)) ：去重</p>
+<h2 id="collect_list">collect_list</h2>
+<p>concat_ws(',',collect_list(column)) ：不去重</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Hive四舍五入]]></title>
+        <id>https://dingdingtao.github.io/post/hive-si-she-wu-ru/</id>
+        <link href="https://dingdingtao.github.io/post/hive-si-she-wu-ru/">
+        </link>
+        <updated>2021-03-01T01:52:42.000Z</updated>
+        <summary type="html"><![CDATA[<p>Hive常用四舍五入的方式</p>
 ]]></summary>
-        <content type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
+        <content type="html"><![CDATA[<p>Hive常用四舍五入的方式</p>
 <!-- more -->
-<p><a href="https://github.com/getgridea/gridea">Github</a><br>
-<a href="https://gridea.dev/">Gridea 主页</a><br>
-<a href="http://fehey.com/">示例网站</a></p>
-<h2 id="特性">特性👇</h2>
-<p>📝  你可以使用最酷的 <strong>Markdown</strong> 语法，进行快速创作</p>
-<p>🌉  你可以给文章配上精美的封面图和在文章任意位置插入图片</p>
-<p>🏷️  你可以对文章进行标签分组</p>
-<p>📋  你可以自定义菜单，甚至可以创建外部链接菜单</p>
-<p>💻  你可以在 <strong>Windows</strong>，<strong>MacOS</strong> 或 <strong>Linux</strong> 设备上使用此客户端</p>
-<p>🌎  你可以使用 <strong>𝖦𝗂𝗍𝗁𝗎𝖻 𝖯𝖺𝗀𝖾𝗌</strong> 或 <strong>Coding Pages</strong> 向世界展示，未来将支持更多平台</p>
-<p>💬  你可以进行简单的配置，接入 <a href="https://github.com/gitalk/gitalk">Gitalk</a> 或 <a href="https://github.com/SukkaW/DisqusJS">DisqusJS</a> 评论系统</p>
-<p>🇬🇧  你可以使用<strong>中文简体</strong>或<strong>英语</strong></p>
-<p>🌁  你可以任意使用应用内默认主题或任意第三方主题，强大的主题自定义能力</p>
-<p>🖥  你可以自定义源文件夹，利用 OneDrive、百度网盘、iCloud、Dropbox 等进行多设备同步</p>
-<p>🌱 当然 <strong>Gridea</strong> 还很年轻，有很多不足，但请相信，它会不停向前 🏃</p>
-<p>未来，它一定会成为你离不开的伙伴</p>
-<p>尽情发挥你的才华吧！</p>
-<p>😘 Enjoy~</p>
+<h1 id="大于等于">大于等于</h1>
+<pre><code>select ceil(23.33) from dual;
+
+=&gt; 24
+</code></pre>
+<h1 id="小于等于">小于等于</h1>
+<pre><code>select floor(23.33) from dual;
+
+=&gt; 23
+</code></pre>
+<h1 id="四舍五入">四舍五入</h1>
+<pre><code>select round(23.33) from dual;
+
+=&gt; 23
+</code></pre>
+<h1 id="截断">截断</h1>
+<pre><code>select trunc(23.33) from dual;
+
+=&gt; 23
+</code></pre>
+<h1 id="获取符号">获取符号</h1>
+<pre><code>select sign(-23.33) from dual;
+
+-1
+</code></pre>
+<h1 id="百分数实现">百分数实现</h1>
+<pre><code>select round(20/100, 2)||'%' 
+</code></pre>
 ]]></content>
     </entry>
 </feed>

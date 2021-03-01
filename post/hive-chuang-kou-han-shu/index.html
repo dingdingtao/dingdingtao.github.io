@@ -1,0 +1,335 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Hive窗口函数 | dingdingtao的个人静态网站</title>
+<link rel="shortcut icon" href="https://dingdingtao.github.io/favicon.ico?v=1614573022454">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://dingdingtao.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Hive窗口函数 | dingdingtao的个人静态网站 - Atom Feed" href="https://dingdingtao.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="NTILE
+NTILE(n)，用于将分组数据按照顺序切分成n片，返回当前切片值
+NTILE不支持ROWS BETWEEN，比如 NTILE(2) OVER(PARTITION BY cookieid ORDER BY createtime ..." />
+    <meta name="keywords" content="Hive" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://dingdingtao.github.io">
+  <img class="avatar" src="https://dingdingtao.github.io/images/avatar.png?v=1614573022454" alt="">
+  </a>
+  <h1 class="site-title">
+    dingdingtao的个人静态网站
+  </h1>
+  <p class="site-description">
+    温故而知新
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="https://dingdingtao.github.io" class="menu" target="_blank">
+          列表
+        </a>
+      
+    
+      
+        <a href="https://dingdingtao.github.io/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="https://dingdingtao.github.io/archives" class="menu">
+          时间线
+        </a>
+      
+    
+      
+        <a href="https://dingdingtao.github.io/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+        <a href="https://github.com/dingdingtao" target="_blank">
+          <i class="ri-github-line"></i>
+        </a>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Hive窗口函数
+            </h2>
+            <div class="post-info">
+              <span>
+                2021-03-01
+              </span>
+              <span>
+                5 min read
+              </span>
+              
+                <a href="https://dingdingtao.github.io/tag/hive/" class="post-tag">
+                  # Hive
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <h1 id="ntile">NTILE</h1>
+<p>NTILE(n)，用于将分组数据按照顺序切分成n片，返回当前切片值<br>
+NTILE不支持ROWS BETWEEN，比如 NTILE(2) OVER(PARTITION BY cookieid ORDER BY createtime ROWS BETWEEN 3 PRECEDING AND CURRENT ROW)<br>
+如果切片不均匀，默认增加第一个切片的分布</p>
+<pre><code class="language-SQL">SELECT 
+cookieid,
+createtime,
+pv,
+NTILE(2) OVER(PARTITION BY cookieid ORDER BY createtime) AS rn1,	--分组内将数据分成2片
+NTILE(3) OVER(PARTITION BY cookieid ORDER BY createtime) AS rn2,  --分组内将数据分成3片
+NTILE(4) OVER(ORDER BY createtime) AS rn3        --将所有数据分成4片
+FROM lxw1234 
+ORDER BY cookieid,createtime;
+ 
+cookieid day           pv       rn1     rn2     rn3
+-------------------------------------------------
+cookie1 2015-04-10      1       1       1       1
+cookie1 2015-04-11      5       1       1       1
+cookie1 2015-04-12      7       1       1       2
+cookie1 2015-04-13      3       1       2       2
+cookie1 2015-04-14      2       2       2       3
+cookie1 2015-04-15      4       2       3       3
+cookie1 2015-04-16      4       2       3       4
+cookie2 2015-04-10      2       1       1       1
+cookie2 2015-04-11      3       1       1       1
+cookie2 2015-04-12      5       1       1       2
+cookie2 2015-04-13      6       1       2       2
+cookie2 2015-04-14      3       2       2       3
+cookie2 2015-04-15      9       2       3       4
+cookie2 2015-04-16      7       2       3       4
+</code></pre>
+<p>–比如，统计一个cookie，pv数最多的前1/3的天</p>
+<pre><code class="language-SQL">SELECT 
+cookieid,
+createtime,
+pv,
+NTILE(3) OVER(PARTITION BY cookieid ORDER BY pv DESC) AS rn 
+FROM lxw1234;
+ 
+--rn = 1 的记录，就是我们想要的结果
+ 
+cookieid day           pv       rn
+----------------------------------
+cookie1 2015-04-12      7       1
+cookie1 2015-04-11      5       1
+cookie1 2015-04-15      4       1
+cookie1 2015-04-16      4       2
+cookie1 2015-04-13      3       2
+cookie1 2015-04-14      2       3
+cookie1 2015-04-10      1       3
+cookie2 2015-04-15      9       1
+cookie2 2015-04-16      7       1
+cookie2 2015-04-13      6       1
+cookie2 2015-04-12      5       2
+cookie2 2015-04-14      3       2
+cookie2 2015-04-11      3       3
+cookie2 2015-04-10      2       3
+</code></pre>
+<h1 id="row_number">ROW_NUMBER</h1>
+<p>ROW_NUMBER() –从1开始，按照顺序，生成分组内记录的序列<br>
+–比如，按照pv降序排列，生成分组内每天的pv名次<br>
+ROW_NUMBER() 的应用场景非常多，再比如，获取分组内排序第一的记录;获取一个session中的第一条refer等。</p>
+<pre><code class="language-SQL">SELECT 
+cookieid,
+createtime,
+pv,
+ROW_NUMBER() OVER(PARTITION BY cookieid ORDER BY pv desc) AS rn 
+FROM lxw1234;
+ 
+cookieid day           pv       rn
+------------------------------------------- 
+cookie1 2015-04-12      7       1
+cookie1 2015-04-11      5       2
+cookie1 2015-04-15      4       3
+cookie1 2015-04-16      4       4
+cookie1 2015-04-13      3       5
+cookie1 2015-04-14      2       6
+cookie1 2015-04-10      1       7
+cookie2 2015-04-15      9       1
+cookie2 2015-04-16      7       2
+cookie2 2015-04-13      6       3
+cookie2 2015-04-12      5       4
+cookie2 2015-04-14      3       5
+cookie2 2015-04-11      3       6
+cookie2 2015-04-10      2       7
+</code></pre>
+<h1 id="rank-和-dense_rank">RANK 和 DENSE_RANK</h1>
+<p>—RANK() 生成数据项在分组中的排名，排名相等会在名次中留下空位<br>
+—DENSE_RANK() 生成数据项在分组中的排名，排名相等会在名次中不会留下空位</p>
+<pre><code class="language-SQL">SELECT 
+cookieid,
+createtime,
+pv,
+RANK() OVER(PARTITION BY cookieid ORDER BY pv desc) AS rn1,
+DENSE_RANK() OVER(PARTITION BY cookieid ORDER BY pv desc) AS rn2,
+ROW_NUMBER() OVER(PARTITION BY cookieid ORDER BY pv DESC) AS rn3 
+FROM lxw1234 
+WHERE cookieid = 'cookie1';
+ 
+cookieid day           pv       rn1     rn2     rn3 
+-------------------------------------------------- 
+cookie1 2015-04-12      7       1       1       1
+cookie1 2015-04-11      5       2       2       2
+cookie1 2015-04-15      4       3       3       3
+cookie1 2015-04-16      4       3       3       4
+cookie1 2015-04-13      3       5       4       5
+cookie1 2015-04-14      2       6       5       6
+cookie1 2015-04-10      1       7       6       7
+ 
+rn1: 15号和16号并列第3, 13号排第5
+rn2: 15号和16号并列第3, 13号排第4
+rn3: 如果相等，则按记录值排序，生成唯一的次序，如果所有记录值都相等，或许会随机排吧。
+</code></pre>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li><a href="#ntile">NTILE</a></li>
+<li><a href="#row_number">ROW_NUMBER</a></li>
+<li><a href="#rank-%E5%92%8C-dense_rank">RANK 和 DENSE_RANK</a></li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://dingdingtao.github.io/post/hive-nei-zhi-han-shu/">
+              <h3 class="post-title">
+                Hive内置函数
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered&nbsp&nbspby&nbsp&nbsp<a href="https://github.com/dingdingtao" target="_blank">dingdingtao</a>
+<!-- 点击特效 -->
+<!-- 爱心 -->
+<script src="https://cdn.jsdelivr.net/gh/ITJoker233/ITJoker233.github.io@latest/CDN/js/love.min.js"></script>
+
+
+
+
+
+
+<!-- 看板 -->
+<script src="https://eqcn.ajz.miesnfu.com/wp-content/plugins/wp-3d-pony/live2dw/lib/L2Dwidget.min.js"></script>
+
+<script>
+    L2Dwidget.init({
+        "model": {
+            jsonPath: "https://unpkg.com/live2d-widget-model-hijiki@1.0.5/assets/hijiki.model.json",
+            "scale": 1
+        },
+        "display": {
+            "position": "right",
+            "width": 150,
+            "height": 300,
+            "hOffset": 0,
+            "vOffset": -20
+        },
+        "mobile": {
+            "show": true,
+            "scale": 0.5
+        },
+        "react": {
+            "opacityDefault": 0.7,
+            "opacityOnHover": 0.2
+        }
+    });
+</script>
+<!--
+黑猫：https://unpkg.com/live2d-widget-model-hijiki@1.0.5/assets/hijiki.model.json
+萌娘：https://unpkg.com/live2d-widget-model-shizuku@1.0.5/assets/shizuku.model.json
+白猫：https://unpkg.com/live2d-widget-model-tororo@1.0.5/assets/tororo.model.json
+狗狗：https://unpkg.com/live2d-widget-model-wanko@1.0.5/assets/wanko.model.json
+小可爱：https://unpkg.com/live2d-widget-model-z16@1.0.5/assets/z16.model.json
+小可爱：https://unpkg.com/live2d-widget-model-koharu@1.0.5/assets/koharu.model.json
+-->
+  <a class="rss" href="https://dingdingtao.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
