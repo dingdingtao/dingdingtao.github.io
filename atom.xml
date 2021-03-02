@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://dingdingtao.github.io</id>
     <title>dingdingtao的个人静态网站</title>
-    <updated>2021-03-01T08:07:08.117Z</updated>
+    <updated>2021-03-02T06:07:44.088Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://dingdingtao.github.io"/>
     <link rel="self" href="https://dingdingtao.github.io/atom.xml"/>
@@ -10,6 +10,121 @@
     <logo>https://dingdingtao.github.io/images/avatar.png</logo>
     <icon>https://dingdingtao.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, dingdingtao的个人静态网站</rights>
+    <entry>
+        <title type="html"><![CDATA[Hive时间处理函数]]></title>
+        <id>https://dingdingtao.github.io/post/hive-shi-jian-chu-li-han-shu/</id>
+        <link href="https://dingdingtao.github.io/post/hive-shi-jian-chu-li-han-shu/">
+        </link>
+        <updated>2021-03-02T03:47:20.000Z</updated>
+        <summary type="html"><![CDATA[<center>常用的hive时间处理函数</center>
+]]></summary>
+        <content type="html"><![CDATA[<center>常用的hive时间处理函数</center>
+<!-- more -->
+<h2 id="from_unixtime-时间戳转日期">from_unixtime (时间戳转日期)</h2>
+<p>语法：<code>from_unixtime(bigint unixtime[, string pattern])</code><br>
+返回值：string<br>
+说明：转化UNIX时间戳（从1970-01-0100:00:00 UTC到指定时间的秒数）到当前时区的时间格式。</p>
+<pre><code class="language-SQL">select from_unixtime(1614657355, 'yyyy-MM-dd HH:mm:ss') from table_name
+&gt; 2021-03-02 11:55:55
+</code></pre>
+<h2 id="unix_timestamp-日期转时间戳">unix_timestamp (日期转时间戳)</h2>
+<p>语法：<code>unix_timestamp([[string datetime], string pattern])</code><br>
+返回值：bigint<br>
+说明：转化UNIX时间戳（从1970-01-0100:00:00 UTC到指定时间的秒数）到当前时区的时间格式。</p>
+<pre><code class="language-SQL">-- 默认当前时间戳
+select unix_timestamp() from table
+
+-- 指定时间的时间戳
+select unix_timestamp('2021-03-02 11:55:55') from table
+&gt; 1614657355
+select unix_timestamp('2021-03-02 11:55:55', 'yyyy-MM-dd HH:mm:ss') from table
+&gt; 1614657355
+</code></pre>
+<h2 id="to_date-字符串转日期">to_date (字符串转日期)</h2>
+<p>语法：<code>to_date(string datetime)</code><br>
+返回值：string<br>
+说明：返回字符串格式日期时间字段中的日期部分。</p>
+<pre><code class="language-SQL">select to_date('2021-03-02 11:55:55') from table
+&gt; 2021-03-02
+</code></pre>
+<h2 id="year-返回日期中的年">year (返回日期中的年)</h2>
+<p>语法：<code>year(string datetime)</code><br>
+返回值：int<br>
+说明：返回日期中的年。</p>
+<pre><code class="language-SQL">select year('2021-03-02 11:55:55') from table
+&gt; 2021
+select year('2021-03-02') from table
+&gt; 2021
+</code></pre>
+<h2 id="month-返回日期中的月份">month (返回日期中的月份)</h2>
+<p>语法：<code>month(string datetime)</code><br>
+返回值：int<br>
+说明：返回日期中的月份。</p>
+<pre><code class="language-SQL">select month('2021-03-02 11:55:55') from table
+&gt; 3
+select month('2021-03-02') from table
+&gt; 3
+</code></pre>
+<h2 id="day-返回日期中的天">day (返回日期中的天)</h2>
+<p>语法：<code>day(string datetime)</code><br>
+返回值：int<br>
+说明：返回日期中的天。</p>
+<pre><code class="language-SQL">select day('2021-03-02 11:55:55') from table
+&gt; 2
+select day('2021-03-02') from table
+&gt; 2
+</code></pre>
+<h2 id="hour-日期中的小时">hour (日期中的小时)</h2>
+<p>语法：<code>hour(string datetime)</code><br>
+返回值：int<br>
+说明：返回日期中的小时。</p>
+<pre><code class="language-SQL">select hour('2021-03-02 11:55:55') from table
+&gt; 11
+</code></pre>
+<h2 id="minute-日期中的分钟">minute (日期中的分钟)</h2>
+<p>语法：<code>minute(string datetime)</code><br>
+返回值：int<br>
+说明：返回日期中的分钟。</p>
+<pre><code class="language-SQL">select minute('2021-03-02 11:55:55') from table
+&gt; 55
+</code></pre>
+<h2 id="second-日期中的秒">second (日期中的秒)</h2>
+<p>语法：<code>second(string datetime)</code><br>
+返回值：int<br>
+说明：返回日期中的秒。</p>
+<pre><code class="language-SQL">select second('2021-03-02 11:55:55') from table
+&gt; 55
+</code></pre>
+<h2 id="weekofyear-日期在当前的周数">weekofyear (日期在当前的周数)</h2>
+<p>语法：<code>weekofyear(string datetime)</code><br>
+返回值：int<br>
+说明：返回日期在当前的周数。</p>
+<pre><code class="language-SQL">select weekofyear('2021-03-02 11:55:55') from table
+&gt; 10
+</code></pre>
+<h2 id="datediff-日期比较">datediff (日期比较)</h2>
+<p>语法：<code>datediff(string enddate,string startdate)</code><br>
+返回值：int<br>
+说明：返回结束日期减去开始日期的天数。</p>
+<pre><code class="language-SQL">select datediff('2021-02-28', '2021-03-02') from table
+&gt; 3
+</code></pre>
+<h2 id="date_add-日期增加">date_add (日期增加)</h2>
+<p>语法：<code>date_add(string startdate, int days)</code><br>
+返回值：string<br>
+说明：返回开始日期startdate增加days天后的日期。</p>
+<pre><code class="language-SQL">select date_add('2021-02-28', 1) from table
+&gt; 2021-03-01
+</code></pre>
+<h2 id="date_sub-日期减少">date_sub (日期减少)</h2>
+<p>语法：<code>date_sub(string startdate, int days)</code><br>
+返回值：string<br>
+说明：返回开始日期startdate减少days天后的日期。</p>
+<pre><code class="language-SQL">select date_sub('2021-02-28', 1) from table
+&gt; 2021-02-27
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Hive窗口函数]]></title>
         <id>https://dingdingtao.github.io/post/hive-chuang-kou-han-shu/</id>
@@ -327,37 +442,41 @@ rn3: 如果相等，则按记录值排序，生成唯一的次序，如果所有
         <link href="https://dingdingtao.github.io/post/hive-si-she-wu-ru/">
         </link>
         <updated>2021-03-01T01:52:42.000Z</updated>
-        <summary type="html"><![CDATA[<p>Hive常用四舍五入的方式</p>
+        <summary type="html"><![CDATA[<center>
+Hive常用四舍五入的方式
+</center>
 ]]></summary>
-        <content type="html"><![CDATA[<p>Hive常用四舍五入的方式</p>
+        <content type="html"><![CDATA[<center>
+Hive常用四舍五入的方式
+</center>
 <!-- more -->
-<h1 id="大于等于">大于等于</h1>
-<pre><code>select ceil(23.33) from dual;
+<h2 id="大于等于">大于等于</h2>
+<pre><code class="language-SQL">select ceil(23.33) from dual;
 
 =&gt; 24
 </code></pre>
-<h1 id="小于等于">小于等于</h1>
-<pre><code>select floor(23.33) from dual;
+<h2 id="小于等于">小于等于</h2>
+<pre><code class="language-SQL">select floor(23.33) from dual;
 
 =&gt; 23
 </code></pre>
-<h1 id="四舍五入">四舍五入</h1>
-<pre><code>select round(23.33) from dual;
+<h2 id="四舍五入">四舍五入</h2>
+<pre><code class="language-SQL">select round(23.33) from dual;
 
 =&gt; 23
 </code></pre>
-<h1 id="截断">截断</h1>
-<pre><code>select trunc(23.33) from dual;
+<h2 id="截断">截断</h2>
+<pre><code class="language-SQL">select trunc(23.33) from dual;
 
 =&gt; 23
 </code></pre>
-<h1 id="获取符号">获取符号</h1>
-<pre><code>select sign(-23.33) from dual;
+<h2 id="获取符号">获取符号</h2>
+<pre><code class="language-SQL">select sign(-23.33) from dual;
 
 -1
 </code></pre>
-<h1 id="百分数实现">百分数实现</h1>
-<pre><code>select round(20/100, 2)||'%' 
+<h2 id="百分数实现">百分数实现</h2>
+<pre><code class="language-SQL">select round(20/100, 2)||'%' 
 </code></pre>
 ]]></content>
     </entry>

@@ -1,0 +1,346 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Hive时间处理函数 | dingdingtao的个人静态网站</title>
+<link rel="shortcut icon" href="https://dingdingtao.github.io/favicon.ico?v=1614659343545">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://dingdingtao.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Hive时间处理函数 | dingdingtao的个人静态网站 - Atom Feed" href="https://dingdingtao.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+<!-- gitalk -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+<!-- gitalk -->
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+<!-- 点击特效 -->
+<!-- 爱心 -->
+<script src="https://cdn.jsdelivr.net/gh/ITJoker233/ITJoker233.github.io@latest/CDN/js/love.min.js"></script>
+
+<!-- 看板 -->
+<script src="https://eqcn.ajz.miesnfu.com/wp-content/plugins/wp-3d-pony/live2dw/lib/L2Dwidget.min.js"></script>
+<!-- 看板配置 -->
+<script>
+    L2Dwidget.init({
+        "model": {
+            jsonPath: "https://unpkg.com/live2d-widget-model-hijiki@1.0.5/assets/hijiki.model.json",
+            "scale": 1
+        },
+        "display": {
+            "position": "right",
+            "width": 200,
+            "height": 400,
+            "hOffset": 0,
+            "vOffset": -20
+        },
+        "mobile": {
+            "show": true,
+            "scale": 0.3
+        },
+        "react": {
+            "opacityDefault": 0.7,
+            "opacityOnHover": 0.2
+        }
+    });
+</script>
+<!--
+黑猫：https://unpkg.com/live2d-widget-model-hijiki@1.0.5/assets/hijiki.model.json
+萌娘：https://unpkg.com/live2d-widget-model-shizuku@1.0.5/assets/shizuku.model.json
+白猫：https://unpkg.com/live2d-widget-model-tororo@1.0.5/assets/tororo.model.json
+狗狗：https://unpkg.com/live2d-widget-model-wanko@1.0.5/assets/wanko.model.json
+小可爱：https://unpkg.com/live2d-widget-model-z16@1.0.5/assets/z16.model.json
+小可爱：https://unpkg.com/live2d-widget-model-koharu@1.0.5/assets/koharu.model.json
+-->
+
+
+
+    <meta name="description" content="常用的hive时间处理函数
+
+from_unixtime (时间戳转日期)
+语法：from_unixtime(bigint unixtime[, string pattern])
+返回值：string
+说明：转化UNIX时间戳（从1970-..." />
+    <meta name="keywords" content="Hive" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://dingdingtao.github.io">
+  <img class="avatar" src="https://dingdingtao.github.io/images/avatar.png?v=1614659343545" alt="">
+  </a>
+  <h1 class="site-title">
+    dingdingtao的个人静态网站
+  </h1>
+  <p class="site-description">
+    温故而知新
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="https://dingdingtao.github.io" class="menu">
+          列表
+        </a>
+      
+    
+      
+        <a href="https://dingdingtao.github.io/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="https://dingdingtao.github.io/archives" class="menu">
+          时间线
+        </a>
+      
+    
+      
+        <a href="https://dingdingtao.github.io/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+        <a href="https://github.com/dingdingtao" target="_blank">
+          <i class="ri-github-line"></i>
+        </a>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Hive时间处理函数
+            </h2>
+            <div class="post-info">
+              <span>
+                2021-03-02
+              </span>
+              <span>
+                4 min read
+              </span>
+              
+                <a href="https://dingdingtao.github.io/tag/hive/" class="post-tag">
+                  # Hive
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <center>常用的hive时间处理函数</center>
+<!-- more -->
+<h2 id="from_unixtime-时间戳转日期">from_unixtime (时间戳转日期)</h2>
+<p>语法：<code>from_unixtime(bigint unixtime[, string pattern])</code><br>
+返回值：string<br>
+说明：转化UNIX时间戳（从1970-01-0100:00:00 UTC到指定时间的秒数）到当前时区的时间格式。</p>
+<pre><code class="language-SQL">select from_unixtime(1614657355, 'yyyy-MM-dd HH:mm:ss') from table_name
+&gt; 2021-03-02 11:55:55
+</code></pre>
+<h2 id="unix_timestamp-日期转时间戳">unix_timestamp (日期转时间戳)</h2>
+<p>语法：<code>unix_timestamp([[string datetime], string pattern])</code><br>
+返回值：bigint<br>
+说明：转化UNIX时间戳（从1970-01-0100:00:00 UTC到指定时间的秒数）到当前时区的时间格式。</p>
+<pre><code class="language-SQL">-- 默认当前时间戳
+select unix_timestamp() from table
+
+-- 指定时间的时间戳
+select unix_timestamp('2021-03-02 11:55:55') from table
+&gt; 1614657355
+select unix_timestamp('2021-03-02 11:55:55', 'yyyy-MM-dd HH:mm:ss') from table
+&gt; 1614657355
+</code></pre>
+<h2 id="to_date-字符串转日期">to_date (字符串转日期)</h2>
+<p>语法：<code>to_date(string datetime)</code><br>
+返回值：string<br>
+说明：返回字符串格式日期时间字段中的日期部分。</p>
+<pre><code class="language-SQL">select to_date('2021-03-02 11:55:55') from table
+&gt; 2021-03-02
+</code></pre>
+<h2 id="year-返回日期中的年">year (返回日期中的年)</h2>
+<p>语法：<code>year(string datetime)</code><br>
+返回值：int<br>
+说明：返回日期中的年。</p>
+<pre><code class="language-SQL">select year('2021-03-02 11:55:55') from table
+&gt; 2021
+select year('2021-03-02') from table
+&gt; 2021
+</code></pre>
+<h2 id="month-返回日期中的月份">month (返回日期中的月份)</h2>
+<p>语法：<code>month(string datetime)</code><br>
+返回值：int<br>
+说明：返回日期中的月份。</p>
+<pre><code class="language-SQL">select month('2021-03-02 11:55:55') from table
+&gt; 3
+select month('2021-03-02') from table
+&gt; 3
+</code></pre>
+<h2 id="day-返回日期中的天">day (返回日期中的天)</h2>
+<p>语法：<code>day(string datetime)</code><br>
+返回值：int<br>
+说明：返回日期中的天。</p>
+<pre><code class="language-SQL">select day('2021-03-02 11:55:55') from table
+&gt; 2
+select day('2021-03-02') from table
+&gt; 2
+</code></pre>
+<h2 id="hour-日期中的小时">hour (日期中的小时)</h2>
+<p>语法：<code>hour(string datetime)</code><br>
+返回值：int<br>
+说明：返回日期中的小时。</p>
+<pre><code class="language-SQL">select hour('2021-03-02 11:55:55') from table
+&gt; 11
+</code></pre>
+<h2 id="minute-日期中的分钟">minute (日期中的分钟)</h2>
+<p>语法：<code>minute(string datetime)</code><br>
+返回值：int<br>
+说明：返回日期中的分钟。</p>
+<pre><code class="language-SQL">select minute('2021-03-02 11:55:55') from table
+&gt; 55
+</code></pre>
+<h2 id="second-日期中的秒">second (日期中的秒)</h2>
+<p>语法：<code>second(string datetime)</code><br>
+返回值：int<br>
+说明：返回日期中的秒。</p>
+<pre><code class="language-SQL">select second('2021-03-02 11:55:55') from table
+&gt; 55
+</code></pre>
+<h2 id="weekofyear-日期在当前的周数">weekofyear (日期在当前的周数)</h2>
+<p>语法：<code>weekofyear(string datetime)</code><br>
+返回值：int<br>
+说明：返回日期在当前的周数。</p>
+<pre><code class="language-SQL">select weekofyear('2021-03-02 11:55:55') from table
+&gt; 10
+</code></pre>
+<h2 id="datediff-日期比较">datediff (日期比较)</h2>
+<p>语法：<code>datediff(string enddate,string startdate)</code><br>
+返回值：int<br>
+说明：返回结束日期减去开始日期的天数。</p>
+<pre><code class="language-SQL">select datediff('2021-02-28', '2021-03-02') from table
+&gt; 3
+</code></pre>
+<h2 id="date_add-日期增加">date_add (日期增加)</h2>
+<p>语法：<code>date_add(string startdate, int days)</code><br>
+返回值：string<br>
+说明：返回开始日期startdate增加days天后的日期。</p>
+<pre><code class="language-SQL">select date_add('2021-02-28', 1) from table
+&gt; 2021-03-01
+</code></pre>
+<h2 id="date_sub-日期减少">date_sub (日期减少)</h2>
+<p>语法：<code>date_sub(string startdate, int days)</code><br>
+返回值：string<br>
+说明：返回开始日期startdate减少days天后的日期。</p>
+<pre><code class="language-SQL">select date_sub('2021-02-28', 1) from table
+&gt; 2021-02-27
+</code></pre>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#from_unixtime-%E6%97%B6%E9%97%B4%E6%88%B3%E8%BD%AC%E6%97%A5%E6%9C%9F">from_unixtime (时间戳转日期)</a></li>
+<li><a href="#unix_timestamp-%E6%97%A5%E6%9C%9F%E8%BD%AC%E6%97%B6%E9%97%B4%E6%88%B3">unix_timestamp (日期转时间戳)</a></li>
+<li><a href="#to_date-%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BD%AC%E6%97%A5%E6%9C%9F">to_date (字符串转日期)</a></li>
+<li><a href="#year-%E8%BF%94%E5%9B%9E%E6%97%A5%E6%9C%9F%E4%B8%AD%E7%9A%84%E5%B9%B4">year (返回日期中的年)</a></li>
+<li><a href="#month-%E8%BF%94%E5%9B%9E%E6%97%A5%E6%9C%9F%E4%B8%AD%E7%9A%84%E6%9C%88%E4%BB%BD">month (返回日期中的月份)</a></li>
+<li><a href="#day-%E8%BF%94%E5%9B%9E%E6%97%A5%E6%9C%9F%E4%B8%AD%E7%9A%84%E5%A4%A9">day (返回日期中的天)</a></li>
+<li><a href="#hour-%E6%97%A5%E6%9C%9F%E4%B8%AD%E7%9A%84%E5%B0%8F%E6%97%B6">hour (日期中的小时)</a></li>
+<li><a href="#minute-%E6%97%A5%E6%9C%9F%E4%B8%AD%E7%9A%84%E5%88%86%E9%92%9F">minute (日期中的分钟)</a></li>
+<li><a href="#second-%E6%97%A5%E6%9C%9F%E4%B8%AD%E7%9A%84%E7%A7%92">second (日期中的秒)</a></li>
+<li><a href="#weekofyear-%E6%97%A5%E6%9C%9F%E5%9C%A8%E5%BD%93%E5%89%8D%E7%9A%84%E5%91%A8%E6%95%B0">weekofyear (日期在当前的周数)</a></li>
+<li><a href="#datediff-%E6%97%A5%E6%9C%9F%E6%AF%94%E8%BE%83">datediff (日期比较)</a></li>
+<li><a href="#date_add-%E6%97%A5%E6%9C%9F%E5%A2%9E%E5%8A%A0">date_add (日期增加)</a></li>
+<li><a href="#date_sub-%E6%97%A5%E6%9C%9F%E5%87%8F%E5%B0%91">date_sub (日期减少)</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://dingdingtao.github.io/post/hive-chuang-kou-han-shu/">
+              <h3 class="post-title">
+                Hive窗口函数
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered&nbsp&nbspby&nbsp&nbsp<a href="https://github.com/dingdingtao" target="_blank">dingdingtao</a>
+  <a class="rss" href="https://dingdingtao.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
