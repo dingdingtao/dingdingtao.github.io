@@ -2,11 +2,11 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Hive窗口函数 | dingdingtao的个人静态网站</title>
+<title>Maven环境配置 | dingdingtao的个人静态网站</title>
 <link rel="shortcut icon" href="https://dingdingtao.github.io/favicon.ico?v=1614753712150">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://dingdingtao.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="Hive窗口函数 | dingdingtao的个人静态网站 - Atom Feed" href="https://dingdingtao.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="Maven环境配置 | dingdingtao的个人静态网站 - Atom Feed" href="https://dingdingtao.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 <!-- gitalk -->
@@ -56,10 +56,26 @@
 
 
 
-    <meta name="description" content="NTILE
-NTILE(n)，用于将分组数据按照顺序切分成n片，返回当前切片值
-NTILE不支持ROWS BETWEEN，比如 NTILE(2) OVER(PARTITION BY cookieid ORDER BY createtime ..." />
-    <meta name="keywords" content="Hive" />
+    <meta name="description" content="
+maven安装和环境变量配置
+
+
+系统要求
+
+
+
+项目
+要求
+
+
+
+
+JDK
+Maven 3.3 要求 JDK 1.7 或以上Maven 3.2 要求 JDK 1.6 或以上 Maven 3.0/3.1 要求 JDK 1.5 或以上
+
+
+..." />
+    <meta name="keywords" content="Maven" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
@@ -125,144 +141,75 @@ NTILE不支持ROWS BETWEEN，比如 NTILE(2) OVER(PARTITION BY cookieid ORDER BY
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              Hive窗口函数
+              Maven环境配置
             </h2>
             <div class="post-info">
               <span>
-                2021-03-01
+                2021-03-03
               </span>
               <span>
-                5 min read
+                1 min read
               </span>
               
-                <a href="https://dingdingtao.github.io/tag/hive/" class="post-tag">
-                  # Hive
+                <a href="https://dingdingtao.github.io/tag/Java/Maven/" class="post-tag">
+                  # Maven
                 </a>
               
             </div>
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <h1 id="ntile">NTILE</h1>
-<p>NTILE(n)，用于将分组数据按照顺序切分成n片，返回当前切片值<br>
-NTILE不支持ROWS BETWEEN，比如 NTILE(2) OVER(PARTITION BY cookieid ORDER BY createtime ROWS BETWEEN 3 PRECEDING AND CURRENT ROW)<br>
-如果切片不均匀，默认增加第一个切片的分布</p>
-<pre><code class="language-SQL">SELECT 
-cookieid,
-createtime,
-pv,
-NTILE(2) OVER(PARTITION BY cookieid ORDER BY createtime) AS rn1,	--分组内将数据分成2片
-NTILE(3) OVER(PARTITION BY cookieid ORDER BY createtime) AS rn2,  --分组内将数据分成3片
-NTILE(4) OVER(ORDER BY createtime) AS rn3        --将所有数据分成4片
-FROM lxw1234 
-ORDER BY cookieid,createtime;
- 
-cookieid day           pv       rn1     rn2     rn3
--------------------------------------------------
-cookie1 2015-04-10      1       1       1       1
-cookie1 2015-04-11      5       1       1       1
-cookie1 2015-04-12      7       1       1       2
-cookie1 2015-04-13      3       1       2       2
-cookie1 2015-04-14      2       2       2       3
-cookie1 2015-04-15      4       2       3       3
-cookie1 2015-04-16      4       2       3       4
-cookie2 2015-04-10      2       1       1       1
-cookie2 2015-04-11      3       1       1       1
-cookie2 2015-04-12      5       1       1       2
-cookie2 2015-04-13      6       1       2       2
-cookie2 2015-04-14      3       2       2       3
-cookie2 2015-04-15      9       2       3       4
-cookie2 2015-04-16      7       2       3       4
-</code></pre>
-<p>–比如，统计一个cookie，pv数最多的前1/3的天</p>
-<pre><code class="language-SQL">SELECT 
-cookieid,
-createtime,
-pv,
-NTILE(3) OVER(PARTITION BY cookieid ORDER BY pv DESC) AS rn 
-FROM lxw1234;
- 
---rn = 1 的记录，就是我们想要的结果
- 
-cookieid day           pv       rn
-----------------------------------
-cookie1 2015-04-12      7       1
-cookie1 2015-04-11      5       1
-cookie1 2015-04-15      4       1
-cookie1 2015-04-16      4       2
-cookie1 2015-04-13      3       2
-cookie1 2015-04-14      2       3
-cookie1 2015-04-10      1       3
-cookie2 2015-04-15      9       1
-cookie2 2015-04-16      7       1
-cookie2 2015-04-13      6       1
-cookie2 2015-04-12      5       2
-cookie2 2015-04-14      3       2
-cookie2 2015-04-11      3       3
-cookie2 2015-04-10      2       3
-</code></pre>
-<h1 id="row_number">ROW_NUMBER</h1>
-<p>ROW_NUMBER() –从1开始，按照顺序，生成分组内记录的序列<br>
-–比如，按照pv降序排列，生成分组内每天的pv名次<br>
-ROW_NUMBER() 的应用场景非常多，再比如，获取分组内排序第一的记录;获取一个session中的第一条refer等。</p>
-<pre><code class="language-SQL">SELECT 
-cookieid,
-createtime,
-pv,
-ROW_NUMBER() OVER(PARTITION BY cookieid ORDER BY pv desc) AS rn 
-FROM lxw1234;
- 
-cookieid day           pv       rn
-------------------------------------------- 
-cookie1 2015-04-12      7       1
-cookie1 2015-04-11      5       2
-cookie1 2015-04-15      4       3
-cookie1 2015-04-16      4       4
-cookie1 2015-04-13      3       5
-cookie1 2015-04-14      2       6
-cookie1 2015-04-10      1       7
-cookie2 2015-04-15      9       1
-cookie2 2015-04-16      7       2
-cookie2 2015-04-13      6       3
-cookie2 2015-04-12      5       4
-cookie2 2015-04-14      3       5
-cookie2 2015-04-11      3       6
-cookie2 2015-04-10      2       7
-</code></pre>
-<h1 id="rank-和-dense_rank">RANK 和 DENSE_RANK</h1>
-<p>—RANK() 生成数据项在分组中的排名，排名相等会在名次中留下空位<br>
-—DENSE_RANK() 生成数据项在分组中的排名，排名相等会在名次中不会留下空位</p>
-<pre><code class="language-SQL">SELECT 
-cookieid,
-createtime,
-pv,
-RANK() OVER(PARTITION BY cookieid ORDER BY pv desc) AS rn1,
-DENSE_RANK() OVER(PARTITION BY cookieid ORDER BY pv desc) AS rn2,
-ROW_NUMBER() OVER(PARTITION BY cookieid ORDER BY pv DESC) AS rn3 
-FROM lxw1234 
-WHERE cookieid = 'cookie1';
- 
-cookieid day           pv       rn1     rn2     rn3 
--------------------------------------------------- 
-cookie1 2015-04-12      7       1       1       1
-cookie1 2015-04-11      5       2       2       2
-cookie1 2015-04-15      4       3       3       3
-cookie1 2015-04-16      4       3       3       4
-cookie1 2015-04-13      3       5       4       5
-cookie1 2015-04-14      2       6       5       6
-cookie1 2015-04-10      1       7       6       7
- 
-rn1: 15号和16号并列第3, 13号排第5
-rn2: 15号和16号并列第3, 13号排第4
-rn3: 如果相等，则按记录值排序，生成唯一的次序，如果所有记录值都相等，或许会随机排吧。
-</code></pre>
+                <center>
+maven安装和环境变量配置
+</center>
+<!-- more -->
+<h2 id="系统要求">系统要求</h2>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>要求</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>JDK</td>
+<td>Maven 3.3 要求 JDK 1.7 或以上</br>Maven 3.2 要求 JDK 1.6 或以上 </br>Maven 3.0/3.1 要求 JDK 1.5 或以上</td>
+</tr>
+<tr>
+<td>内存</td>
+<td>没有最低要求</td>
+</tr>
+<tr>
+<td>磁盘</td>
+<td>Maven 自身安装需要大约 10 MB 空间。除此之外，额外的磁盘空间将用于你的本地 Maven 仓库。你本地仓库的大小取决于使用情况，但预期至少 500 MB</td>
+</tr>
+<tr>
+<td>操作系统</td>
+<td>没有最低要求</td>
+</tr>
+</tbody>
+</table>
+<h2 id="maven-下载">Maven 下载</h2>
+<p>Maven 下载地址：<a href="http://maven.apache.org/download.cgi">http://maven.apache.org/download.cgi</a></p>
+<h2 id="maven-环境变量">Maven 环境变量</h2>
+<ol>
+<li>添加环境变量 MAVEN_HOME</li>
+<li>变量值为Maven解压目录</li>
+<li>编辑Path系统变量</li>
+<li>添加变量值：<code>;%MAVEN_HOME%\bin</code></li>
+</ol>
 
               </div>
               <div class="toc-container">
                 <ul class="markdownIt-TOC">
-<li><a href="#ntile">NTILE</a></li>
-<li><a href="#row_number">ROW_NUMBER</a></li>
-<li><a href="#rank-%E5%92%8C-dense_rank">RANK 和 DENSE_RANK</a></li>
+<li>
+<ul>
+<li><a href="#%E7%B3%BB%E7%BB%9F%E8%A6%81%E6%B1%82">系统要求</a></li>
+<li><a href="#maven-%E4%B8%8B%E8%BD%BD">Maven 下载</a></li>
+<li><a href="#maven-%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F">Maven 环境变量</a></li>
+</ul>
+</li>
 </ul>
 
               </div>
@@ -273,9 +220,9 @@ rn3: 如果相等，则按记录值排序，生成唯一的次序，如果所有
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://dingdingtao.github.io/post/hive-nei-zhi-han-shu/">
+            <a href="https://dingdingtao.github.io/post/pandas-shu-ju-chu-li/">
               <h3 class="post-title">
-                Hive内置函数
+                Pandas数据处理
               </h3>
             </a>
           </div>

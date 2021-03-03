@@ -1,22 +1,147 @@
-<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://dingdingtao.github.io</id>
-    <title>dingdingtao的个人静态网站</title>
-    <updated>2021-03-03T10:49:39.124Z</updated>
-    <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://dingdingtao.github.io"/>
-    <link rel="self" href="https://dingdingtao.github.io/atom.xml"/>
-    <subtitle>温故而知新</subtitle>
-    <logo>https://dingdingtao.github.io/images/avatar.png</logo>
-    <icon>https://dingdingtao.github.io/favicon.ico</icon>
-    <rights>All rights reserved 2021, dingdingtao的个人静态网站</rights>
-    <entry>
-        <title type="html"><![CDATA[Maven-POM标签大全详解]]></title>
-        <id>https://dingdingtao.github.io/post/maven-pom-biao-qian-da-quan-xiang-jie/</id>
-        <link href="https://dingdingtao.github.io/post/maven-pom-biao-qian-da-quan-xiang-jie/">
-        </link>
-        <updated>2021-03-03T06:39:47.000Z</updated>
-        <content type="html"><![CDATA[<pre><code class="language-XML">&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Maven-POM标签大全详解 | dingdingtao的个人静态网站</title>
+<link rel="shortcut icon" href="https://dingdingtao.github.io/favicon.ico?v=1614753712150">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://dingdingtao.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Maven-POM标签大全详解 | dingdingtao的个人静态网站 - Atom Feed" href="https://dingdingtao.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+<!-- gitalk -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+<!-- gitalk -->
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+<!-- 点击特效 -->
+<!-- 爱心 -->
+<script src="https://cdn.jsdelivr.net/gh/ITJoker233/ITJoker233.github.io@latest/CDN/js/love.min.js"></script>
+
+<!-- 看板 -->
+<script src="https://eqcn.ajz.miesnfu.com/wp-content/plugins/wp-3d-pony/live2dw/lib/L2Dwidget.min.js"></script>
+<!-- 看板配置 -->
+<script>
+    L2Dwidget.init({
+        "model": {
+            jsonPath: "https://unpkg.com/live2d-widget-model-hijiki@1.0.5/assets/hijiki.model.json",
+            "scale": 1
+        },
+        "display": {
+            "position": "right",
+            "width": 200,
+            "height": 400,
+            "hOffset": 0,
+            "vOffset": -20
+        },
+        "mobile": {
+            "show": true,
+            "scale": 0.3
+        },
+        "react": {
+            "opacityDefault": 0.7,
+            "opacityOnHover": 0.2
+        }
+    });
+</script>
+<!--
+黑猫：https://unpkg.com/live2d-widget-model-hijiki@1.0.5/assets/hijiki.model.json
+萌娘：https://unpkg.com/live2d-widget-model-shizuku@1.0.5/assets/shizuku.model.json
+白猫：https://unpkg.com/live2d-widget-model-tororo@1.0.5/assets/tororo.model.json
+狗狗：https://unpkg.com/live2d-widget-model-wanko@1.0.5/assets/wanko.model.json
+小可爱：https://unpkg.com/live2d-widget-model-z16@1.0.5/assets/z16.model.json
+小可爱：https://unpkg.com/live2d-widget-model-koharu@1.0.5/assets/koharu.model.json
+-->
+
+
+
+    <meta name="description" content="&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instanc..." />
+    <meta name="keywords" content="Maven" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://dingdingtao.github.io">
+  <img class="avatar" src="https://dingdingtao.github.io/images/avatar.png?v=1614753712150" alt="">
+  </a>
+  <h1 class="site-title">
+    dingdingtao的个人静态网站
+  </h1>
+  <p class="site-description">
+    温故而知新
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="https://dingdingtao.github.io" class="menu">
+          列表
+        </a>
+      
+    
+      
+        <a href="https://dingdingtao.github.io/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="https://dingdingtao.github.io/archives" class="menu">
+          时间线
+        </a>
+      
+    
+      
+        <a href="https://dingdingtao.github.io/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+        <a href="https://github.com/dingdingtao" target="_blank">
+          <i class="ri-github-line"></i>
+        </a>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Maven-POM标签大全详解
+            </h2>
+            <div class="post-info">
+              <span>
+                2021-03-03
+              </span>
+              <span>
+                33 min read
+              </span>
+              
+                <a href="https://dingdingtao.github.io/tag/Java/Maven/" class="post-tag">
+                  # Maven
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <pre><code class="language-XML">&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
     xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0http://maven.apache.org/maven-v4_0_0.xsd&quot;&gt;
     &lt;!--父项目的坐标。如果项目中没有规定某个元素的值，那么父项目中的对应值即为项目的默认值。 坐标包括group ID，artifact ID和 
         version。 --&gt;
@@ -685,770 +810,77 @@
     &lt;properties /&gt;
 &lt;/project&gt;
 </code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Maven环境配置]]></title>
-        <id>https://dingdingtao.github.io/post/maven-huan-jing-pei-zhi/</id>
-        <link href="https://dingdingtao.github.io/post/maven-huan-jing-pei-zhi/">
-        </link>
-        <updated>2021-03-03T06:31:13.000Z</updated>
-        <summary type="html"><![CDATA[<center>
-maven安装和环境变量配置
-</center>
-]]></summary>
-        <content type="html"><![CDATA[<center>
-maven安装和环境变量配置
-</center>
-<!-- more -->
-<h2 id="系统要求">系统要求</h2>
-<table>
-<thead>
-<tr>
-<th>项目</th>
-<th>要求</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>JDK</td>
-<td>Maven 3.3 要求 JDK 1.7 或以上</br>Maven 3.2 要求 JDK 1.6 或以上 </br>Maven 3.0/3.1 要求 JDK 1.5 或以上</td>
-</tr>
-<tr>
-<td>内存</td>
-<td>没有最低要求</td>
-</tr>
-<tr>
-<td>磁盘</td>
-<td>Maven 自身安装需要大约 10 MB 空间。除此之外，额外的磁盘空间将用于你的本地 Maven 仓库。你本地仓库的大小取决于使用情况，但预期至少 500 MB</td>
-</tr>
-<tr>
-<td>操作系统</td>
-<td>没有最低要求</td>
-</tr>
-</tbody>
-</table>
-<h2 id="maven-下载">Maven 下载</h2>
-<p>Maven 下载地址：<a href="http://maven.apache.org/download.cgi">http://maven.apache.org/download.cgi</a></p>
-<h2 id="maven-环境变量">Maven 环境变量</h2>
-<ol>
-<li>添加环境变量 MAVEN_HOME</li>
-<li>变量值为Maven解压目录</li>
-<li>编辑Path系统变量</li>
-<li>添加变量值：<code>;%MAVEN_HOME%\bin</code></li>
-</ol>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Pandas数据处理]]></title>
-        <id>https://dingdingtao.github.io/post/pandas-shu-ju-chu-li/</id>
-        <link href="https://dingdingtao.github.io/post/pandas-shu-ju-chu-li/">
-        </link>
-        <updated>2021-03-02T06:49:19.000Z</updated>
-        <summary type="html"><![CDATA[<center>
-pandas模块的简单使用
-</center>
-]]></summary>
-        <content type="html"><![CDATA[<center>
-pandas模块的简单使用
-</center>
-<!-- more -->
-<h2 id="安装">安装</h2>
-<pre><code class="language-text">pip install pandas
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[pymysql数据库连接]]></title>
-        <id>https://dingdingtao.github.io/post/pymysql-shu-ju-ku-lian-jie/</id>
-        <link href="https://dingdingtao.github.io/post/pymysql-shu-ju-ku-lian-jie/">
-        </link>
-        <updated>2021-03-02T06:35:56.000Z</updated>
-        <summary type="html"><![CDATA[<center>
-Python pymsql模块简单使用方法
-</center>
-]]></summary>
-        <content type="html"><![CDATA[<center>
-Python pymsql模块简单使用方法
-</center>
-<!-- more -->
-<h2 id="安装">安装</h2>
-<pre><code class="language-text">pip install pymysql
-</code></pre>
-<h2 id="使用">使用</h2>
-<p>使用方法参考<a href="https://www.jb51.net/article/92516.htm">Python中操作mysql的pymysql模块详解</a></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Python常用模块&框架]]></title>
-        <id>https://dingdingtao.github.io/post/python-kuang-jia/</id>
-        <link href="https://dingdingtao.github.io/post/python-kuang-jia/">
-        </link>
-        <updated>2021-03-02T06:28:26.000Z</updated>
-        <summary type="html"><![CDATA[<center>
-整理包括Django、等框架
-</center>
-]]></summary>
-        <content type="html"><![CDATA[<center>
-整理包括Django、等框架
-</center>
-<!-- more -->
-<h2 id="python模块">Python模块</h2>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">模块</th>
-<th style="text-align:center">说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center"><a href="https://dingdingtao.github.io/post/pymysql-shu-ju-ku-lian-jie/">pymysql</a></td>
-<td style="text-align:center">数据库连接</td>
-</tr>
-<tr>
-<td style="text-align:center"><a href="https://dingdingtao.github.io/post/pandas-shu-ju-chu-li/">pandas</a></td>
-<td style="text-align:center">数据处理</td>
-</tr>
-</tbody>
-</table>
-<h2 id="python框架">Python框架</h2>
-<ul>
-<li><a href="https://dingdingtao.github.io/tag/Python/Django">Django</a></li>
-</ul>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Django参考]]></title>
-        <id>https://dingdingtao.github.io/post/django-can-kao/</id>
-        <link href="https://dingdingtao.github.io/post/django-can-kao/">
-        </link>
-        <updated>2021-03-02T06:19:22.000Z</updated>
-        <summary type="html"><![CDATA[<center>
-Django安装、创建项目、目录结构及简单使用方法
-</center>
-]]></summary>
-        <content type="html"><![CDATA[<center>
-Django安装、创建项目、目录结构及简单使用方法
-</center>
-<!-- more -->
-<h2 id="安装django">安装django</h2>
-<pre><code class="language-text">pip3 install Django==3.0.6 -i https://pypi.tuna.tsinghua.edu.cn/simple
-</code></pre>
-<h2 id="创建项目">创建项目</h2>
-<pre><code class="language-text">django-admin.py startproject testdj
-</code></pre>
-<p><strong>目录结构</strong></p>
-<pre><code class="language-text">|-- HelloWorld
-|   |-- __init__.py
-|   |-- asgi.py
-|   |-- settings.py
-|   |-- urls.py
-|   |-- wsgi.py
-|-- manage.py
-</code></pre>
-<p><strong>目录说明</strong></p>
-<ul>
-<li><code>HelloWorld</code>: 项目的容器。</li>
-<li><code>manage.py</code>: 一个实用的命令行工具，可让你以各种方式与该 Django 项目进行交互。</li>
-<li><code>HelloWorld/__init__.py</code>: 一个空文件，告诉 Python 该目录是一个 Python 包。</li>
-<li><code>HelloWorld/asgi.py</code>: 一个 ASGI 兼容的 Web 服务器的入口，以便运行你的项目。</li>
-<li><code>HelloWorld/settings.py</code>: 该 Django 项目的设置/配置。</li>
-<li><code>HelloWorld/urls.py</code>: 该 Django 项目的 URL 声明; 一份由 Django 驱动的网站&quot;目录&quot;。</li>
-<li><code>HelloWorld/wsgi.py</code>: 一个 WSGI 兼容的 Web 服务器的入口，以便运行你的项目。</li>
-</ul>
-<h2 id="启动">启动</h2>
-<pre><code class="language-text">python manage.py runserver [ip:port]
-</code></pre>
-<h2 id="视图">视图</h2>
-<p>创建视图文件HelloWorld/HelloWorld/views.py</p>
-<pre><code class="language-python">'''引入HttpResponse'''
-from django.http import HttpResponse
- '''视图函数'''
-def hello(request):
-    '''
-    
-    '''
-    return HttpResponse(&quot;Hello world ! &quot;)
-</code></pre>
-<h3 id="视图函数">视图函数</h3>
-<p>视图层中有两个重要的对象：<br>
-请求对象(request): 视图函数的固定第一参数。<br>
-响应对象(HttpResponse): 视图函数返回内容。</p>
-<p><strong>请求对象</strong><br>
-常用的 request 属性<br>
-<code>GET</code>: 数据类型是 QueryDict，一个类似于字典的对象，包含 HTTP GET 的所有参数。<br>
-有相同的键，就把所有的值放到对应的列表里。<br>
-取值格式：对象.方法。<br>
-get()：返回字符串，如果该键对应有多个值，取出该键的最后一个值。</p>
-<pre><code class="language-python">def runoob(request):
-    name = request.GET.get(&quot;name&quot;)
-    return HttpResponse('姓名：{}'.format(name))
-</code></pre>
-<p><code>POST</code>: 数据类型是 QueryDict，一个类似于字典的对象，包含 HTTP POST 的所有参数。<br>
-常用于 form 表单，form 表单里的标签 name 属性对应参数的键，value 属性对应参数的值。<br>
-取值格式： 对象.方法。<br>
-get()：返回字符串，如果该键对应有多个值，取出该键的最后一个值。</p>
-<pre><code class="language-python">def runoob(request):
-    name = request.POST.get(&quot;name&quot;)
-    return HttpResponse('姓名：{}'.format(name))
-</code></pre>
-<p><code>body</code>: 数据类型是二进制字节流，是原生请求体里的参数内容，在 HTTP 中用于 POST，因为 GET 没有请求体。<br>
-在 HTTP 中不常用，而在处理非 HTTP 形式的报文时非常有用，例如：二进制图片、XML、Json 等。</p>
-<pre><code class="language-python">def runoob(request):
-    name = request.body
-    print(name)
-    return HttpResponse(&quot;菜鸟教程&quot;)
-</code></pre>
-<p><code>path</code>: 获取 URL 中的路径部分(不包括域名端口等)，数据类型是字符串。</p>
-<pre><code class="language-python">def runoob(request):
-    name = request.path
-    print(name)
-    return HttpResponse(&quot;菜鸟教程&quot;)
-</code></pre>
-<p><code>method</code>:  获取当前请求的方式，数据类型是字符串，且结果为大写。</p>
-<pre><code class="language-python">def runoob(request):
-    name = request.method
-    print(name)
-    return HttpResponse(&quot;菜鸟教程&quot;)
-</code></pre>
-<p><strong>响应对象</strong><br>
-<code>HttpResponse()</code>: 返回文本，参数为字符串，字符串中写文本内容。如果参数为字符串里含有 html 标签，也可以渲染。</p>
-<p><code>render()</code>: 返回文本，第一个参数为 request，第二个参数为字符串（页面名称），第三个参数为字典（可选参数，向页面传递的参数：键为页面参数名，值为views参数名）。</p>
-<p><code>redirect()</code>：重定向，跳转新页面。参数为字符串，字符串中填写页面路径。一般用于 form 表单提交后，跳转到新页面。</p>
-<h2 id="url路由">URL路由</h2>
-<p>绑定 URL 与视图函数</p>
-<pre><code class="language-python">'''引入url'''
-from django.conf.urls import url
-'''从当前目录引入views视图文件'''
-from . import views
-'''配置url与视图对应关系'''
-urlpatterns = [
-    '''
-    url(请求路径, 视图函数)
-    '''
-    url(r'^$', views.hello),
-]
-</code></pre>
-<p><strong>路由</strong><br>
-<code>url()</code>: 普通路径和正则路径均可使用，需要自己手动添加正则首位限制符号。</p>
-<pre><code class="language-python">from django.conf.urls import url # 用 url 需要引入
 
-urlpatterns = [
-    url(r'^admin/$', admin.site.urls),
-    url(r'^index/$', views.index), # 普通路径
-    url(r'^articles/([0-9]{4})/$', views.articles), # 正则路径
-]
-</code></pre>
-<p><code>path()</code>：用于普通路径，不需要自己手动添加正则首位限制符号，底层已经添加。<br>
-<code>re_path</code>：用于正则路径，需要自己手动添加正则首位限制符号。</p>
-<pre><code class="language-python">from django.urls import re_path # 用re_path 需要引入
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('index/', views.index), # 普通路径
-    re_path(r'^articles/([0-9]{4})/$', views.articles), # 正则路径
-]
-</code></pre>
-<p><strong>路径分组</strong></p>
-<p>正则路径中的无名分组</p>
-<pre><code class="language-python">urlpatterns = [
-    path('admin/', admin.site.urls),
-    re_path(&quot;^index/([0-9]{4})/$&quot;, views.index),
-]
+              </div>
+              <div class="toc-container">
+                
+              </div>
+            </div>
+          </article>
+        </div>
 
-from django.shortcuts import HttpResponse
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://dingdingtao.github.io/post/maven-huan-jing-pei-zhi/">
+              <h3 class="post-title">
+                Maven环境配置
+              </h3>
+            </a>
+          </div>
+        
 
-def index(request，year):
-    print(year) # 一个形参代表路径中一个分组的内容，按顺序匹配
-    return HttpResponse('菜鸟教程')
+        
 
-</code></pre>
-<p>正则路径中的有名分组</p>
-<pre><code class="language-python">urlpatterns = [
-    path('admin/', admin.site.urls),
-    re_path(&quot;^index/(?P[0-9]{4})/(?P[0-9]{2})/$&quot;, views.index),
-]
+        <div class="site-footer">
+  Please&nbsp;&nbsp;contact&nbsp;&nbsp;the&nbsp;&nbsp;authors&nbsp;&nbsp;<a href="https://github.com/dingdingtao" target="_blank">dingdingtao</a>&nbsp;&nbsp;if&nbsp;&nbsp;you&nbsp;&nbsp;have&nbsp;&nbsp;further&nbsp;&nbsp;questions
+  <a class="rss" href="https://dingdingtao.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
 
-from django.shortcuts import HttpResponse
-def index(request, year, month):
-    print(year,month) # 一个形参代表路径中一个分组的内容，按关键字对应匹配
-    return HttpResponse('菜鸟教程')
-</code></pre>
-<p><strong>路由分发</strong><br>
-存在问题：Django 项目里多个app目录共用一个 urls 容易造成混淆，后期维护也不方便。<br>
-解决：使用路由分发（include），让每个app目录都单独拥有自己的 urls。<br>
-步骤：</p>
-<ol>
-<li>在每个 app 目录里都创建一个 urls.py 文件。</li>
-<li>在项目名称目录下的 urls 文件里，统一将路径分发给各个 app 目录。</li>
-</ol>
-<pre><code class="language-python">from django.contrib import admin
-from django.urls import path,include # 从 django.urls 引入 include
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path(&quot;app01/&quot;, include(&quot;app01.urls&quot;)),
-    path(&quot;app02/&quot;, include(&quot;app02.urls&quot;)),
-]
-</code></pre>
-<p><strong>反向解析</strong></p>
-<p><strong>命名空间</strong></p>
-<h2 id="模版">模版</h2>
-<p><strong>模版目录</strong><br>
-项目目录下创建templates目录,修改 TEMPLATES 中的 DIRS 为 [os.path.join(BASE_DIR, 'templates')],将模版目录修改为templates。</p>
-<pre><code class="language-conf">TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')], # 修改位置
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-            ],
-        },
-    },
-]
-</code></pre>
-<p><strong>创建模版文件</strong><br>
-参考<a href="https://www.runoob.com/django/django-template.html">模版标签</a></p>
-<p><strong>向模板提交数据</strong></p>
-<pre><code class="language-python">from django.shortcuts import render
- 
-def runoob(request):
-    context          = {}
-    context['hello'] = 'Hello World!'
-    return render(request, 'runoob.html', context)
-</code></pre>
-<h2 id="参考">参考</h2>
-<p><a href="https://www.runoob.com/django/django-tutorial.html">django参考</a></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Hive时间处理函数]]></title>
-        <id>https://dingdingtao.github.io/post/hive-shi-jian-chu-li-han-shu/</id>
-        <link href="https://dingdingtao.github.io/post/hive-shi-jian-chu-li-han-shu/">
-        </link>
-        <updated>2021-03-02T03:47:20.000Z</updated>
-        <summary type="html"><![CDATA[<center>常用的hive时间处理函数</center>
-]]></summary>
-        <content type="html"><![CDATA[<center>常用的hive时间处理函数</center>
-<!-- more -->
-<h2 id="from_unixtime-时间戳转日期">from_unixtime (时间戳转日期)</h2>
-<p>语法：<code>from_unixtime(bigint unixtime[, string pattern])</code><br>
-返回值：string<br>
-说明：转化UNIX时间戳（从1970-01-0100:00:00 UTC到指定时间的秒数）到当前时区的时间格式。</p>
-<pre><code class="language-SQL">select from_unixtime(1614657355, 'yyyy-MM-dd HH:mm:ss') from table_name
-&gt; 2021-03-02 11:55:55
-</code></pre>
-<h2 id="unix_timestamp-日期转时间戳">unix_timestamp (日期转时间戳)</h2>
-<p>语法：<code>unix_timestamp([[string datetime], string pattern])</code><br>
-返回值：bigint<br>
-说明：转化UNIX时间戳（从1970-01-0100:00:00 UTC到指定时间的秒数）到当前时区的时间格式。</p>
-<pre><code class="language-SQL">-- 默认当前时间戳
-select unix_timestamp() from table
+      </div>
+    </div>
 
--- 指定时间的时间戳
-select unix_timestamp('2021-03-02 11:55:55') from table
-&gt; 1614657355
-select unix_timestamp('2021-03-02 11:55:55', 'yyyy-MM-dd HH:mm:ss') from table
-&gt; 1614657355
-</code></pre>
-<h2 id="to_date-字符串转日期">to_date (字符串转日期)</h2>
-<p>语法：<code>to_date(string datetime)</code><br>
-返回值：string<br>
-说明：返回字符串格式日期时间字段中的日期部分。</p>
-<pre><code class="language-SQL">select to_date('2021-03-02 11:55:55') from table
-&gt; 2021-03-02
-</code></pre>
-<h2 id="year-返回日期中的年">year (返回日期中的年)</h2>
-<p>语法：<code>year(string datetime)</code><br>
-返回值：int<br>
-说明：返回日期中的年。</p>
-<pre><code class="language-SQL">select year('2021-03-02 11:55:55') from table
-&gt; 2021
-select year('2021-03-02') from table
-&gt; 2021
-</code></pre>
-<h2 id="month-返回日期中的月份">month (返回日期中的月份)</h2>
-<p>语法：<code>month(string datetime)</code><br>
-返回值：int<br>
-说明：返回日期中的月份。</p>
-<pre><code class="language-SQL">select month('2021-03-02 11:55:55') from table
-&gt; 3
-select month('2021-03-02') from table
-&gt; 3
-</code></pre>
-<h2 id="day-返回日期中的天">day (返回日期中的天)</h2>
-<p>语法：<code>day(string datetime)</code><br>
-返回值：int<br>
-说明：返回日期中的天。</p>
-<pre><code class="language-SQL">select day('2021-03-02 11:55:55') from table
-&gt; 2
-select day('2021-03-02') from table
-&gt; 2
-</code></pre>
-<h2 id="hour-日期中的小时">hour (日期中的小时)</h2>
-<p>语法：<code>hour(string datetime)</code><br>
-返回值：int<br>
-说明：返回日期中的小时。</p>
-<pre><code class="language-SQL">select hour('2021-03-02 11:55:55') from table
-&gt; 11
-</code></pre>
-<h2 id="minute-日期中的分钟">minute (日期中的分钟)</h2>
-<p>语法：<code>minute(string datetime)</code><br>
-返回值：int<br>
-说明：返回日期中的分钟。</p>
-<pre><code class="language-SQL">select minute('2021-03-02 11:55:55') from table
-&gt; 55
-</code></pre>
-<h2 id="second-日期中的秒">second (日期中的秒)</h2>
-<p>语法：<code>second(string datetime)</code><br>
-返回值：int<br>
-说明：返回日期中的秒。</p>
-<pre><code class="language-SQL">select second('2021-03-02 11:55:55') from table
-&gt; 55
-</code></pre>
-<h2 id="weekofyear-日期在当前的周数">weekofyear (日期在当前的周数)</h2>
-<p>语法：<code>weekofyear(string datetime)</code><br>
-返回值：int<br>
-说明：返回日期在当前的周数。</p>
-<pre><code class="language-SQL">select weekofyear('2021-03-02 11:55:55') from table
-&gt; 10
-</code></pre>
-<h2 id="datediff-日期比较">datediff (日期比较)</h2>
-<p>语法：<code>datediff(string enddate,string startdate)</code><br>
-返回值：int<br>
-说明：返回结束日期减去开始日期的天数。</p>
-<pre><code class="language-SQL">select datediff('2021-02-28', '2021-03-02') from table
-&gt; 3
-</code></pre>
-<h2 id="date_add-日期增加">date_add (日期增加)</h2>
-<p>语法：<code>date_add(string startdate, int days)</code><br>
-返回值：string<br>
-说明：返回开始日期startdate增加days天后的日期。</p>
-<pre><code class="language-SQL">select date_add('2021-02-28', 1) from table
-&gt; 2021-03-01
-</code></pre>
-<h2 id="date_sub-日期减少">date_sub (日期减少)</h2>
-<p>语法：<code>date_sub(string startdate, int days)</code><br>
-返回值：string<br>
-说明：返回开始日期startdate减少days天后的日期。</p>
-<pre><code class="language-SQL">select date_sub('2021-02-28', 1) from table
-&gt; 2021-02-27
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Hive窗口函数]]></title>
-        <id>https://dingdingtao.github.io/post/hive-chuang-kou-han-shu/</id>
-        <link href="https://dingdingtao.github.io/post/hive-chuang-kou-han-shu/">
-        </link>
-        <updated>2021-03-01T02:01:09.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="ntile">NTILE</h1>
-<p>NTILE(n)，用于将分组数据按照顺序切分成n片，返回当前切片值<br>
-NTILE不支持ROWS BETWEEN，比如 NTILE(2) OVER(PARTITION BY cookieid ORDER BY createtime ROWS BETWEEN 3 PRECEDING AND CURRENT ROW)<br>
-如果切片不均匀，默认增加第一个切片的分布</p>
-<pre><code class="language-SQL">SELECT 
-cookieid,
-createtime,
-pv,
-NTILE(2) OVER(PARTITION BY cookieid ORDER BY createtime) AS rn1,	--分组内将数据分成2片
-NTILE(3) OVER(PARTITION BY cookieid ORDER BY createtime) AS rn2,  --分组内将数据分成3片
-NTILE(4) OVER(ORDER BY createtime) AS rn3        --将所有数据分成4片
-FROM lxw1234 
-ORDER BY cookieid,createtime;
- 
-cookieid day           pv       rn1     rn2     rn3
--------------------------------------------------
-cookie1 2015-04-10      1       1       1       1
-cookie1 2015-04-11      5       1       1       1
-cookie1 2015-04-12      7       1       1       2
-cookie1 2015-04-13      3       1       2       2
-cookie1 2015-04-14      2       2       2       3
-cookie1 2015-04-15      4       2       3       3
-cookie1 2015-04-16      4       2       3       4
-cookie2 2015-04-10      2       1       1       1
-cookie2 2015-04-11      3       1       1       1
-cookie2 2015-04-12      5       1       1       2
-cookie2 2015-04-13      6       1       2       2
-cookie2 2015-04-14      3       2       2       3
-cookie2 2015-04-15      9       2       3       4
-cookie2 2015-04-16      7       2       3       4
-</code></pre>
-<p>–比如，统计一个cookie，pv数最多的前1/3的天</p>
-<pre><code class="language-SQL">SELECT 
-cookieid,
-createtime,
-pv,
-NTILE(3) OVER(PARTITION BY cookieid ORDER BY pv DESC) AS rn 
-FROM lxw1234;
- 
---rn = 1 的记录，就是我们想要的结果
- 
-cookieid day           pv       rn
-----------------------------------
-cookie1 2015-04-12      7       1
-cookie1 2015-04-11      5       1
-cookie1 2015-04-15      4       1
-cookie1 2015-04-16      4       2
-cookie1 2015-04-13      3       2
-cookie1 2015-04-14      2       3
-cookie1 2015-04-10      1       3
-cookie2 2015-04-15      9       1
-cookie2 2015-04-16      7       1
-cookie2 2015-04-13      6       1
-cookie2 2015-04-12      5       2
-cookie2 2015-04-14      3       2
-cookie2 2015-04-11      3       3
-cookie2 2015-04-10      2       3
-</code></pre>
-<h1 id="row_number">ROW_NUMBER</h1>
-<p>ROW_NUMBER() –从1开始，按照顺序，生成分组内记录的序列<br>
-–比如，按照pv降序排列，生成分组内每天的pv名次<br>
-ROW_NUMBER() 的应用场景非常多，再比如，获取分组内排序第一的记录;获取一个session中的第一条refer等。</p>
-<pre><code class="language-SQL">SELECT 
-cookieid,
-createtime,
-pv,
-ROW_NUMBER() OVER(PARTITION BY cookieid ORDER BY pv desc) AS rn 
-FROM lxw1234;
- 
-cookieid day           pv       rn
-------------------------------------------- 
-cookie1 2015-04-12      7       1
-cookie1 2015-04-11      5       2
-cookie1 2015-04-15      4       3
-cookie1 2015-04-16      4       4
-cookie1 2015-04-13      3       5
-cookie1 2015-04-14      2       6
-cookie1 2015-04-10      1       7
-cookie2 2015-04-15      9       1
-cookie2 2015-04-16      7       2
-cookie2 2015-04-13      6       3
-cookie2 2015-04-12      5       4
-cookie2 2015-04-14      3       5
-cookie2 2015-04-11      3       6
-cookie2 2015-04-10      2       7
-</code></pre>
-<h1 id="rank-和-dense_rank">RANK 和 DENSE_RANK</h1>
-<p>—RANK() 生成数据项在分组中的排名，排名相等会在名次中留下空位<br>
-—DENSE_RANK() 生成数据项在分组中的排名，排名相等会在名次中不会留下空位</p>
-<pre><code class="language-SQL">SELECT 
-cookieid,
-createtime,
-pv,
-RANK() OVER(PARTITION BY cookieid ORDER BY pv desc) AS rn1,
-DENSE_RANK() OVER(PARTITION BY cookieid ORDER BY pv desc) AS rn2,
-ROW_NUMBER() OVER(PARTITION BY cookieid ORDER BY pv DESC) AS rn3 
-FROM lxw1234 
-WHERE cookieid = 'cookie1';
- 
-cookieid day           pv       rn1     rn2     rn3 
--------------------------------------------------- 
-cookie1 2015-04-12      7       1       1       1
-cookie1 2015-04-11      5       2       2       2
-cookie1 2015-04-15      4       3       3       3
-cookie1 2015-04-16      4       3       3       4
-cookie1 2015-04-13      3       5       4       5
-cookie1 2015-04-14      2       6       5       6
-cookie1 2015-04-10      1       7       6       7
- 
-rn1: 15号和16号并列第3, 13号排第5
-rn2: 15号和16号并列第3, 13号排第4
-rn3: 如果相等，则按记录值排序，生成唯一的次序，如果所有记录值都相等，或许会随机排吧。
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Hive内置函数]]></title>
-        <id>https://dingdingtao.github.io/post/hive-nei-zhi-han-shu/</id>
-        <link href="https://dingdingtao.github.io/post/hive-nei-zhi-han-shu/">
-        </link>
-        <updated>2021-03-01T02:00:03.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="内置函数">内置函数</h2>
-<table>
-<thead>
-<tr>
-<th>返回类型</th>
-<th>签名</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>BIGINT</td>
-<td>round(double a)</td>
-<td>返回BIGINT最近的double值</td>
-</tr>
-<tr>
-<td>BIGINT</td>
-<td>floor(double a)</td>
-<td>返回最大BIGINT值等于或小于double</td>
-</tr>
-<tr>
-<td>BIGINT</td>
-<td>ceil(double a)</td>
-<td>返回最小BIGINT值等于或大于double</td>
-</tr>
-<tr>
-<td>DOUBLE</td>
-<td>rand(),rand(int seed)</td>
-<td>它返回一个随机数，从行改变到行</td>
-</tr>
-<tr>
-<td>STRING</td>
-<td>concat(string A,string B,...)</td>
-<td>它返回从A后串联B产生的字符串</td>
-</tr>
-<tr>
-<td>STRING</td>
-<td>substr(string A,int start)</td>
-<td>它返回一个起始，从起始位置的子字符串，直到A结束</td>
-</tr>
-<tr>
-<td>STRING</td>
-<td>substr(string A, int start, int length)</td>
-<td>返回从给定长度的起始start位置开始的字符串</td>
-</tr>
-<tr>
-<td>STRING</td>
-<td>upper(string A)</td>
-<td>它返回从转换的所有字符为大写产生的字符串</td>
-</tr>
-<tr>
-<td>STRING</td>
-<td>ucase(string A)</td>
-<td>和上面的一样</td>
-</tr>
-<tr>
-<td>STRING</td>
-<td>lower(string A)</td>
-<td>它返回转换B的所有字符为小写产生的字符串</td>
-</tr>
-<tr>
-<td>STRING</td>
-<td>lcase(string A)</td>
-<td>和上面的一样</td>
-</tr>
-<tr>
-<td>STRING</td>
-<td>trim(string A)</td>
-<td>它返回字符串从A.两端修剪空格的结果</td>
-</tr>
-<tr>
-<td>STRING</td>
-<td>ltrim(string A)</td>
-<td>它返回A从一开始修整空格产生的字符串(左手侧)</td>
-</tr>
-<tr>
-<td>STRING</td>
-<td>rtrim(string A)</td>
-<td>它返回A从结束修整空格产生的字符串(右侧)</td>
-</tr>
-<tr>
-<td>STRING</td>
-<td>regexp_replace(string A, string B, string C)</td>
-<td>它返回从替换所有子在B结果配合C.在Java正则表达式语法的字符串</td>
-</tr>
-<tr>
-<td>INT</td>
-<td>size(Map&lt;K,V&gt;)</td>
-<td>它返回在映射类型的元素的数量</td>
-</tr>
-<tr>
-<td>INT</td>
-<td>size(Array<T>)</td>
-<td>它返回在数组类型元素的数量</td>
-</tr>
-<tr>
-<td>value of <type></td>
-<td>cast(<expr> as <type>)</td>
-<td>它把表达式的结果expr&lt;类型&gt;如cast('1'作为BIGINT)代表整体转换为字符串'1'。如果转换不成功，返回的是NULL</td>
-</tr>
-<tr>
-<td>STRING</td>
-<td>from_unixtime(int unixtime)</td>
-<td>转换的秒数从Unix纪元(1970-01-0100:00:00 UTC)代表那一刻，在当前系统时区的时间戳字符的串格式：&quot;1970-01-01 00:00:00&quot;</td>
-</tr>
-<tr>
-<td>STRING</td>
-<td>to_date(string timestamp)</td>
-<td>返回一个字符串时间戳的日期部分：to_date(&quot;1970-01-01 00:00:00&quot;) = &quot;1970-01-01&quot;</td>
-</tr>
-<tr>
-<td>INT</td>
-<td>year(string date)</td>
-<td>返回年份部分的日期或时间戳字符串：year(&quot;1970-01-01 00:00:00&quot;) = 1970, year(&quot;1970-01-01&quot;) = 1970</td>
-</tr>
-<tr>
-<td>INT</td>
-<td>month(string date)</td>
-<td>返回日期或时间戳记字符串月份部分：month(&quot;1970-11-01 00:00:00&quot;) = 11, month(&quot;1970-11-01&quot;) = 11</td>
-</tr>
-<tr>
-<td>INT</td>
-<td>day(string date)</td>
-<td>返回日期或时间戳记字符串当天部分：day(&quot;1970-11-01 00:00:00&quot;) = 1, day(&quot;1970-11-01&quot;) = 1</td>
-</tr>
-<tr>
-<td>STRING</td>
-<td>get_json_object(string json_string, string path)</td>
-<td>提取从基于指定的JSON路径的JSON字符串JSON对象，并返回提取的JSON字符串的JSON对象。如果输入的JSON字符串无效，返回NULL</td>
-</tr>
-</tbody>
-</table>
-<h2 id="聚合函数">聚合函数</h2>
-<table>
-<thead>
-<tr>
-<th>返回类型</th>
-<th>签名</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>BIGINT</td>
-<td>count(*), count(expr)</td>
-<td>返回检索行的总数</td>
-</tr>
-<tr>
-<td>DOUBLE</td>
-<td>sum(col), sum(DISTINCT col)</td>
-<td>返回该组或该组中的列的不同值的分组和所有元素的总和</td>
-</tr>
-<tr>
-<td>DOUBLE</td>
-<td>avg(col), avg(DISTINCT col)</td>
-<td>返回上述组或该组中的列的不同值的元素的平均值</td>
-</tr>
-<tr>
-<td>DOUBLE</td>
-<td>min(col)</td>
-<td>返回该组中的列的最小值</td>
-</tr>
-<tr>
-<td>DOUBLE</td>
-<td>max(col)</td>
-<td>返回该组中的列的最大值</td>
-</tr>
-</tbody>
-</table>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Hive列转行]]></title>
-        <id>https://dingdingtao.github.io/post/hive-lie-zhuan-hang/</id>
-        <link href="https://dingdingtao.github.io/post/hive-lie-zhuan-hang/">
-        </link>
-        <updated>2021-03-01T01:58:46.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="列转行">列转行</h1>
-<h2 id="collect_set">collect_set</h2>
-<p>concat_ws(',',collect_set(column)) ：去重</p>
-<h2 id="collect_list">collect_list</h2>
-<p>concat_ws(',',collect_list(column)) ：不去重</p>
-]]></content>
-    </entry>
-</feed>
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
