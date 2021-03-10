@@ -3,11 +3,11 @@
     <meta charset="utf-8" />
 <!-- <meta name="viewport" content="width=device-width, initial-scale=1" /> -->
 <meta name="viewport" content="width=device-width" /> 
-<title>Hive四舍五入 | dingdingtao的个人静态网站</title>
+<title>JavaScript常用正则 | dingdingtao的个人静态网站</title>
 <link rel="shortcut icon" href="https://dingdingtao.github.io/favicon.ico?v=1615370472468">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://dingdingtao.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="Hive四舍五入 | dingdingtao的个人静态网站 - Atom Feed" href="https://dingdingtao.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="JavaScript常用正则 | dingdingtao的个人静态网站 - Atom Feed" href="https://dingdingtao.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 <!-- gitalk -->
@@ -57,23 +57,15 @@
 
 
 
-    <meta name="description" content="
-Hive常用四舍五入的方式
+    <meta name="description" content="URL
+let url_reg = /(http[s]?:\/\/)?[^\s([&quot;&lt;,&gt;]*\.[^\s[&quot;,&gt;&lt;]*/
 
+纯数字
+let num_reg = /^[0-9]*$/
 
-大于等于
-select ceil(23.33) from dual;
-
-=&gt; 24
-
-小于等于
-select floor(23.33) from dual;
-
-=&gt; 23
-
-四舍五入
-selec..." />
-    <meta name="keywords" content="Hive" />
+邮箱
+le..." />
+    <meta name="keywords" content="JavaScript" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
@@ -139,57 +131,53 @@ selec..." />
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              Hive四舍五入
+              JavaScript常用正则
             </h2>
             <div class="post-info">
               <span>
-                2021-03-01
+                2021-03-10
               </span>
               <span>
                 1 min read
               </span>
               
-                <a href="https://dingdingtao.github.io/tag/hive/" class="post-tag">
-                  # Hive
+                <a href="https://dingdingtao.github.io/tag/L8Ul2axDW/" class="post-tag">
+                  # JavaScript
                 </a>
               
             </div>
             
-              <img class="post-feature-image" src="https://dingdingtao.github.io/post-images/hive-si-she-wu-ru.jpg" alt="">
-            
             <div class="post-content-wrapper">
               <div class="post-content">
-                <center>
-Hive常用四舍五入的方式
-</center>
-<!-- more -->
-<h2 id="大于等于">大于等于</h2>
-<pre><code class="language-SQL">select ceil(23.33) from dual;
-
-=&gt; 24
+                <h3 id="url">URL</h3>
+<pre><code class="language-javascript">let url_reg = /(http[s]?:\/\/)?[^\s([&quot;&lt;,&gt;]*\.[^\s[&quot;,&gt;&lt;]*/
 </code></pre>
-<h2 id="小于等于">小于等于</h2>
-<pre><code class="language-SQL">select floor(23.33) from dual;
-
-=&gt; 23
+<h3 id="纯数字">纯数字</h3>
+<pre><code class="language-javascript">let num_reg = /^[0-9]*$/
 </code></pre>
-<h2 id="四舍五入">四舍五入</h2>
-<pre><code class="language-SQL">select round(23.33) from dual;
-
-=&gt; 23
+<h3 id="邮箱">邮箱</h3>
+<pre><code class="language-javascript">let mail_reg = /\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/
 </code></pre>
-<h2 id="截断">截断</h2>
-<pre><code class="language-SQL">select trunc(23.33) from dual;
-
-=&gt; 23
+<h3 id="中文与全角符号">中文与全角符号</h3>
+<pre><code class="language-javascript">let chinese_reg = /[\u3000-\u301e\ufe10-\ufe19\ufe30-\ufe44\ufe50-\ufe6b\uff01-\uffee]/
 </code></pre>
-<h2 id="获取符号">获取符号</h2>
-<pre><code class="language-SQL">select sign(-23.33) from dual;
-
--1
+<h3 id="身份证不验证是否合法">身份证(不验证是否合法)</h3>
+<pre><code class="language-javascript">let idcard_reg = /\d{15}(\d\d[0-9xX])?/
 </code></pre>
-<h2 id="百分数实现">百分数实现</h2>
-<pre><code class="language-SQL">select round(20/100, 2)||'%' 
+<h3 id="仅包含英文字母的字符串">仅包含英文字母的字符串</h3>
+<pre><code class="language-javascript">let eng_reg = /^[A-Za-z]+$/
+</code></pre>
+<h3 id="正整数">正整数</h3>
+<pre><code class="language-javascript">let digital_reg = /^\d+$/
+</code></pre>
+<h3 id="负整数">负整数</h3>
+<pre><code class="language-javascript">let digital_reg = /^((-\d+)|(0+))$/
+</code></pre>
+<h3 id="数字正负数-小数">数字(正负数、小数)</h3>
+<pre><code class="language-javascript">let digital_reg = /^(\-|\+)?\d+(\.\d+)?$/
+</code></pre>
+<h3 id="ipv4">IPv4</h3>
+<pre><code class="language-javascript">let ipv4_reg = /^((2(5[0-5]|[0-4]\d))|[0-1]?\d{1,2})(\.((2(5[0-5]|[0-4]\d))|[0-1]?\d{1,2})){3}$/
 </code></pre>
 
               </div>
@@ -197,12 +185,20 @@ Hive常用四舍五入的方式
                 <ul class="markdownIt-TOC">
 <li>
 <ul>
-<li><a href="#%E5%A4%A7%E4%BA%8E%E7%AD%89%E4%BA%8E">大于等于</a></li>
-<li><a href="#%E5%B0%8F%E4%BA%8E%E7%AD%89%E4%BA%8E">小于等于</a></li>
-<li><a href="#%E5%9B%9B%E8%88%8D%E4%BA%94%E5%85%A5">四舍五入</a></li>
-<li><a href="#%E6%88%AA%E6%96%AD">截断</a></li>
-<li><a href="#%E8%8E%B7%E5%8F%96%E7%AC%A6%E5%8F%B7">获取符号</a></li>
-<li><a href="#%E7%99%BE%E5%88%86%E6%95%B0%E5%AE%9E%E7%8E%B0">百分数实现</a></li>
+<li>
+<ul>
+<li><a href="#url">URL</a></li>
+<li><a href="#%E7%BA%AF%E6%95%B0%E5%AD%97">纯数字</a></li>
+<li><a href="#%E9%82%AE%E7%AE%B1">邮箱</a></li>
+<li><a href="#%E4%B8%AD%E6%96%87%E4%B8%8E%E5%85%A8%E8%A7%92%E7%AC%A6%E5%8F%B7">中文与全角符号</a></li>
+<li><a href="#%E8%BA%AB%E4%BB%BD%E8%AF%81%E4%B8%8D%E9%AA%8C%E8%AF%81%E6%98%AF%E5%90%A6%E5%90%88%E6%B3%95">身份证(不验证是否合法)</a></li>
+<li><a href="#%E4%BB%85%E5%8C%85%E5%90%AB%E8%8B%B1%E6%96%87%E5%AD%97%E6%AF%8D%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2">仅包含英文字母的字符串</a></li>
+<li><a href="#%E6%AD%A3%E6%95%B4%E6%95%B0">正整数</a></li>
+<li><a href="#%E8%B4%9F%E6%95%B4%E6%95%B0">负整数</a></li>
+<li><a href="#%E6%95%B0%E5%AD%97%E6%AD%A3%E8%B4%9F%E6%95%B0-%E5%B0%8F%E6%95%B0">数字(正负数、小数)</a></li>
+<li><a href="#ipv4">IPv4</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -212,6 +208,15 @@ Hive常用四舍五入的方式
           </article>
         </div>
 
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://dingdingtao.github.io/post/maven-pom-biao-qian-da-quan-xiang-jie/">
+              <h3 class="post-title">
+                Maven-POM标签大全详解
+              </h3>
+            </a>
+          </div>
         
 
         

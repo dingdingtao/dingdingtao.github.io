@@ -4,7 +4,7 @@
 <!-- <meta name="viewport" content="width=device-width, initial-scale=1" /> -->
 <meta name="viewport" content="width=device-width" /> 
 <title>pymysql数据库连接 | dingdingtao的个人静态网站</title>
-<link rel="shortcut icon" href="https://dingdingtao.github.io/favicon.ico?v=1614867285683">
+<link rel="shortcut icon" href="https://dingdingtao.github.io/favicon.ico?v=1615370472468">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://dingdingtao.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="pymysql数据库连接 | dingdingtao的个人静态网站 - Atom Feed" href="https://dingdingtao.github.io/atom.xml">
@@ -65,7 +65,11 @@ Python pymsql模块简单使用方法
 pip install pymysql
 
 使用
-使用方法参考Python中操作mysql的pymysql模块详解
+执行sql
+#!/usr/bin/env pytho
+# -*- coding:utf-8 -*-
+import pymysql
+  
 ..." />
     <meta name="keywords" content="Python" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
@@ -76,7 +80,7 @@ pip install pymysql
       <div class="main-content">
         <div class="site-header">
   <a href="https://dingdingtao.github.io">
-  <img class="avatar" src="https://dingdingtao.github.io/images/avatar.png?v=1614867285683" alt="">
+  <img class="avatar" src="https://dingdingtao.github.io/images/avatar.png?v=1615370472468" alt="">
   </a>
   <h1 class="site-title">
     dingdingtao的个人静态网站
@@ -140,7 +144,7 @@ pip install pymysql
                 2021-03-02
               </span>
               <span>
-                1 min read
+                9 min read
               </span>
               
                 <a href="https://dingdingtao.github.io/tag/Python/" class="post-tag">
@@ -159,7 +163,291 @@ Python pymsql模块简单使用方法
 <pre><code class="language-text">pip install pymysql
 </code></pre>
 <h2 id="使用">使用</h2>
-<p>使用方法参考<a href="https://www.jb51.net/article/92516.htm">Python中操作mysql的pymysql模块详解</a></p>
+<h3 id="执行sql">执行sql</h3>
+<pre><code class="language-python">#!/usr/bin/env pytho
+# -*- coding:utf-8 -*-
+import pymysql
+  
+# 创建连接
+conn = pymysql.connect(host='127.0.0.1', port=3306, user='root', passwd='', db='tkq1', charset='utf8')
+# 创建游标
+cursor = conn.cursor()
+# 执行SQL，并返回收影响行数
+effect_row = cursor.execute(&quot;select * from tb7&quot;)
+# 执行SQL，并返回受影响行数
+#effect_row = cursor.execute(&quot;update tb7 set pass = '123' where nid = %s&quot;, (11,))
+# 执行SQL，并返回受影响行数,执行多次
+#effect_row = cursor.executemany(&quot;insert into tb7(user,pass,licnese)values(%s,%s,%s)&quot;, [(&quot;u1&quot;,&quot;u1pass&quot;,&quot;11111&quot;),(&quot;u2&quot;,&quot;u2pass&quot;,&quot;22222&quot;)])
+# 提交，不然无法保存新建或者修改的数据
+conn.commit()
+# 关闭游标
+cursor.close()
+# 关闭连接
+conn.close()
+</code></pre>
+<p><code>注意：存在中文的时候，连接需要添加charset='utf8'，否则中文显示乱码。</code></p>
+<h3 id="获取查询数据">获取查询数据</h3>
+<pre><code class="language-python">#! /usr/bin/env python
+# -*- coding:utf-8 -*-
+# __author__ = &quot;TKQ&quot;
+import pymysql
+ 
+conn = pymysql.connect(host='127.0.0.1', port=3306, user='root', passwd='', db='tkq1')
+cursor = conn.cursor()
+cursor.execute(&quot;select * from tb7&quot;)
+# 获取剩余结果的第一行数据
+row_1 = cursor.fetchone()
+print row_1
+# 获取剩余结果前n行数据
+# row_2 = cursor.fetchmany(3)
+# 获取剩余结果所有数据
+# row_3 = cursor.fetchall()
+conn.commit()
+cursor.close()
+conn.close()
+</code></pre>
+<h3 id="获取新创建数据自增id">获取新创建数据自增ID</h3>
+<p>可以获取到最新自增的ID，也就是最后插入的一条数据ID</p>
+<pre><code class="language-python">#! /usr/bin/env python
+# -*- coding:utf-8 -*-
+# __author__ = &quot;TKQ&quot;
+import pymysql
+ 
+conn = pymysql.connect(host='127.0.0.1', port=3306, user='root', passwd='', db='tkq1')
+cursor = conn.cursor()
+effect_row = cursor.executemany(&quot;insert into tb7(user,pass,licnese)values(%s,%s,%s)&quot;, [(&quot;u3&quot;,&quot;u3pass&quot;,&quot;11113&quot;),(&quot;u4&quot;,&quot;u4pass&quot;,&quot;22224&quot;)])
+conn.commit()
+cursor.close()
+conn.close()
+#获取自增id
+new_id = cursor.lastrowid      
+print new_id
+</code></pre>
+<h3 id="移动游标">移动游标</h3>
+<p>操作都是靠游标，那对游标的控制也是必须的，<code>在fetch数据时按照顺序进行，可以使用cursor.scroll(num,mode)来移动游标位置</code>，如：</p>
+<pre><code class="language-python">cursor.scroll(1,mode='relative') # 相对当前位置移动
+cursor.scroll(2,mode='absolute') # 相对绝对位置移动
+</code></pre>
+<h3 id="fetch数据类型">fetch数据类型</h3>
+<p>关于默认获取的数据是元祖类型，如果想要或者字典类型的数据，即：</p>
+<pre><code class="language-python">#! /usr/bin/env python
+# -*- coding:utf-8 -*-
+# __author__ = &quot;TKQ&quot;
+import pymysql
+ 
+conn = pymysql.connect(host='127.0.0.1', port=3306, user='root', passwd='', db='tkq1')
+#游标设置为字典类型
+cursor = conn.cursor(cursor=pymysql.cursors.DictCursor)
+cursor.execute(&quot;select * from tb7&quot;)
+row_1 = cursor.fetchone()
+print row_1　　#{u'licnese': 213, u'user': '123', u'nid': 10, u'pass': '213'}
+conn.commit()
+cursor.close()
+conn.close()
+</code></pre>
+<h3 id="调用存储过程">调用存储过程</h3>
+<ul>
+<li>调用无参存储过程</li>
+</ul>
+<pre><code class="language-python">#! /usr/bin/env python
+# -*- coding:utf-8 -*-
+# __author__ = &quot;TKQ&quot;
+ 
+import pymysql
+ 
+conn = pymysql.connect(host='127.0.0.1', port=3306, user='root', passwd='', db='tkq1')
+#游标设置为字典类型
+cursor = conn.cursor(cursor=pymysql.cursors.DictCursor)
+#无参数存储过程
+cursor.callproc('p2')  #等价于cursor.execute(&quot;call p2()&quot;)
+row_1 = cursor.fetchone()
+print row_1
+conn.commit()
+cursor.close()
+conn.close()
+</code></pre>
+<ul>
+<li>调用有参存储过程</li>
+</ul>
+<pre><code class="language-python">#! /usr/bin/env python
+# -*- coding:utf-8 -*-
+# __author__ = &quot;TKQ&quot;
+ 
+import pymysql
+ 
+conn = pymysql.connect(host='127.0.0.1', port=3306, user='root', passwd='', db='tkq1')
+cursor = conn.cursor(cursor=pymysql.cursors.DictCursor)
+cursor.callproc('p1', args=(1, 22, 3, 4))
+#获取执行完存储的参数,参数@开头
+cursor.execute(&quot;select @p1,@_p1_1,@_p1_2,@_p1_3&quot;)  #{u'@_p1_1': 22, u'@p1': None, u'@_p1_2': 103, u'@_p1_3': 24}
+row_1 = cursor.fetchone()
+print row_1
+conn.commit()
+cursor.close()
+conn.close()
+</code></pre>
+<h2 id="关于pymysql防注入">关于pymysql防注入</h2>
+<h3 id="字符串拼接查询造成注入">字符串拼接查询，造成注入</h3>
+<ul>
+<li>正常查询语句：</li>
+</ul>
+<pre><code class="language-python">#! /usr/bin/env python
+# -*- coding:utf-8 -*-
+# __author__ = &quot;TKQ&quot;
+import pymysql
+ 
+conn = pymysql.connect(host='127.0.0.1', port=3306, user='root', passwd='', db='tkq1')
+cursor = conn.cursor()
+user=&quot;u1&quot;
+passwd=&quot;u1pass&quot;
+#正常构造语句的情况
+sql=&quot;select user,pass from tb7 where user='%s' and pass='%s'&quot; % (user,passwd)
+#sql=select user,pass from tb7 where user='u1' and pass='u1pass'
+row_count=cursor.execute(sql) row_1 = cursor.fetchone()
+print row_count,row_1
+conn.commit()
+cursor.close()
+conn.close()
+</code></pre>
+<ul>
+<li>构造注入语句：</li>
+</ul>
+<pre><code class="language-python">#! /usr/bin/env python
+# -*- coding:utf-8 -*-
+# __author__ = &quot;TKQ&quot;
+import pymysql
+ 
+conn = pymysql.connect(host='127.0.0.1', port=3306, user='root', passwd='', db='tkq1')
+cursor = conn.cursor()
+user=&quot;u1' or '1'-- &quot;
+passwd=&quot;u1pass&quot;
+sql=&quot;select user,pass from tb7 where user='%s' and pass='%s'&quot; % (user,passwd)
+#拼接语句被构造成下面这样，永真条件，此时就注入成功了。因此要避免这种情况需使用pymysql提供的参数化查询。
+#select user,pass from tb7 where user='u1' or '1'-- ' and pass='u1pass'
+row_count=cursor.execute(sql)
+row_1 = cursor.fetchone()
+print row_count,row_1
+conn.commit()
+cursor.close()
+conn.close()
+</code></pre>
+<h3 id="避免注入使用pymysql提供的参数化语句">避免注入，使用pymysql提供的参数化语句</h3>
+<ul>
+<li>正常参数化查询</li>
+</ul>
+<pre><code class="language-python">#! /usr/bin/env python
+# -*- coding:utf-8 -*-
+# __author__ = &quot;TKQ&quot;
+ 
+import pymysql
+ 
+conn = pymysql.connect(host='127.0.0.1', port=3306, user='root', passwd='', db='tkq1')
+cursor = conn.cursor()
+user=&quot;u1&quot;
+passwd=&quot;u1pass&quot;
+#执行参数化查询
+row_count=cursor.execute(&quot;select user,pass from tb7 where user=%s and pass=%s&quot;,(user,passwd))
+row_1 = cursor.fetchone()
+print row_count,row_1
+conn.commit()
+cursor.close()
+conn.close()
+</code></pre>
+<ul>
+<li>构造注入，参数化查询注入失败。</li>
+</ul>
+<pre><code class="language-python">#! /usr/bin/env python
+# -*- coding:utf-8 -*-
+# __author__ = &quot;TKQ&quot;
+import pymysql
+ 
+conn = pymysql.connect(host='127.0.0.1', port=3306, user='root', passwd='', db='tkq1')
+cursor = conn.cursor()
+user=&quot;u1' or '1'-- &quot;
+passwd=&quot;u1pass&quot;
+#执行参数化查询
+row_count=cursor.execute(&quot;select user,pass from tb7 where user=%s and pass=%s&quot;,(user,passwd))
+#内部执行参数化生成的SQL语句，对特殊字符进行了加\转义，避免注入语句生成。
+# sql=cursor.mogrify(&quot;select user,pass from tb7 where user=%s and pass=%s&quot;,(user,passwd))
+# print sql
+#select user,pass from tb7 where user='u1\' or \'1\'-- ' and pass='u1pass'被转义的语句。
+row_1 = cursor.fetchone()
+print row_count,row_1
+conn.commit()
+cursor.close()
+</code></pre>
+<p><code>结论：excute执行SQL语句的时候，必须使用参数化的方式，否则必然产生SQL注入漏洞。</code></p>
+<h3 id="使用存mysql储过程动态执行sql防注入">使用存mysql储过程动态执行SQL防注入</h3>
+<p>使用MYSQL存储过程自动提供防注入，动态传入SQL到存储过程执行语句。</p>
+<pre><code class="language-SQL">delimiter \\
+DROP PROCEDURE IF EXISTS proc_sql \\
+CREATE PROCEDURE proc_sql (
+  in nid1 INT,
+  in nid2 INT,
+  in callsql VARCHAR(255)
+  )
+BEGIN
+  set @nid1 = nid1;
+  set @nid2 = nid2;
+  set @callsql = callsql;
+    PREPARE myprod FROM @callsql;
+--   PREPARE prod FROM 'select * from tb2 where nid&gt;? and nid&lt;?';  传入的值为字符串，？为占位符
+--   用@p1，和@p2填充占位符
+    EXECUTE myprod USING @nid1,@nid2;
+  DEALLOCATE prepare myprod;
+END\\
+delimiter ;
+</code></pre>
+<pre><code class="language-SQL">set @nid1=12;
+set @nid2=15;
+set @callsql = 'select * from tb7 where nid&gt;? and nid&lt;?';
+CALL proc_sql(@nid1,@nid2,@callsql)
+</code></pre>
+<p>pymsql中调用</p>
+<pre><code class="language-python">#! /usr/bin/env python
+# -*- coding:utf-8 -*-
+# __author__ = &quot;TKQ&quot;
+import pymysql
+ 
+conn = pymysql.connect(host='127.0.0.1', port=3306, user='root', passwd='', db='tkq1')
+cursor = conn.cursor()
+mysql=&quot;select * from tb7 where nid&gt;? and nid&lt;?&quot;
+cursor.callproc('proc_sql', args=(11, 15, mysql))
+rows = cursor.fetchall()
+print rows #((12, 'u1', 'u1pass', 11111), (13, 'u2', 'u2pass', 22222), (14, 'u3', 'u3pass', 11113))
+conn.commit()
+cursor.close()
+conn.close()
+</code></pre>
+<h2 id="使用with简化连接过程">使用with简化连接过程</h2>
+<p>每次都连接关闭很麻烦，使用上下文管理，简化连接过程</p>
+<pre><code class="language-python">#! /usr/bin/env python
+# -*- coding:utf-8 -*-
+# __author__ = &quot;TKQ&quot;
+ 
+import pymysql
+import contextlib
+#定义上下文管理器，连接后自动关闭连接
+@contextlib.contextmanager
+def mysql(host='127.0.0.1', port=3306, user='root', passwd='', db='tkq1',charset='utf8'):
+  conn = pymysql.connect(host=host, port=port, user=user, passwd=passwd, db=db, charset=charset)
+  cursor = conn.cursor(cursor=pymysql.cursors.DictCursor)
+  try:
+    yield cursor
+  finally:
+    conn.commit()
+    cursor.close()
+    conn.close()
+ 
+# 执行sql
+with mysql() as cursor:
+  print(cursor)
+  row_count = cursor.execute(&quot;select * from tb7&quot;)
+  row_1 = cursor.fetchone()
+  print row_count, row_1
+</code></pre>
+<h2 id="参考">参考</h2>
+<p>使用方法参考[Python中操作mysql的pymysql模块详解](https:// www.jb51.net/article/92516.htm)</p>
 
               </div>
               <div class="toc-container">
@@ -167,7 +455,25 @@ Python pymsql模块简单使用方法
 <li>
 <ul>
 <li><a href="#%E5%AE%89%E8%A3%85">安装</a></li>
-<li><a href="#%E4%BD%BF%E7%94%A8">使用</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8">使用</a>
+<ul>
+<li><a href="#%E6%89%A7%E8%A1%8Csql">执行sql</a></li>
+<li><a href="#%E8%8E%B7%E5%8F%96%E6%9F%A5%E8%AF%A2%E6%95%B0%E6%8D%AE">获取查询数据</a></li>
+<li><a href="#%E8%8E%B7%E5%8F%96%E6%96%B0%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E8%87%AA%E5%A2%9Eid">获取新创建数据自增ID</a></li>
+<li><a href="#%E7%A7%BB%E5%8A%A8%E6%B8%B8%E6%A0%87">移动游标</a></li>
+<li><a href="#fetch%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B">fetch数据类型</a></li>
+<li><a href="#%E8%B0%83%E7%94%A8%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B">调用存储过程</a></li>
+</ul>
+</li>
+<li><a href="#%E5%85%B3%E4%BA%8Epymysql%E9%98%B2%E6%B3%A8%E5%85%A5">关于pymysql防注入</a>
+<ul>
+<li><a href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%8B%BC%E6%8E%A5%E6%9F%A5%E8%AF%A2%E9%80%A0%E6%88%90%E6%B3%A8%E5%85%A5">字符串拼接查询，造成注入</a></li>
+<li><a href="#%E9%81%BF%E5%85%8D%E6%B3%A8%E5%85%A5%E4%BD%BF%E7%94%A8pymysql%E6%8F%90%E4%BE%9B%E7%9A%84%E5%8F%82%E6%95%B0%E5%8C%96%E8%AF%AD%E5%8F%A5">避免注入，使用pymysql提供的参数化语句</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8%E5%AD%98mysql%E5%82%A8%E8%BF%87%E7%A8%8B%E5%8A%A8%E6%80%81%E6%89%A7%E8%A1%8Csql%E9%98%B2%E6%B3%A8%E5%85%A5">使用存mysql储过程动态执行SQL防注入</a></li>
+</ul>
+</li>
+<li><a href="#%E4%BD%BF%E7%94%A8with%E7%AE%80%E5%8C%96%E8%BF%9E%E6%8E%A5%E8%BF%87%E7%A8%8B">使用with简化连接过程</a></li>
+<li><a href="#%E5%8F%82%E8%80%83">参考</a></li>
 </ul>
 </li>
 </ul>
