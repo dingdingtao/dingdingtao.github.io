@@ -3,11 +3,11 @@
     <meta charset="utf-8" />
 <!-- <meta name="viewport" content="width=device-width, initial-scale=1" /> -->
 <meta name="viewport" content="width=device-width" /> 
-<title>JavaScript常用正则 | dingdingtao的个人静态网站</title>
+<title>Vue语法模板 | dingdingtao的个人静态网站</title>
 <link rel="shortcut icon" href="https://dingdingtao.github.io/favicon.ico?v=1615796710544">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://dingdingtao.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="JavaScript常用正则 | dingdingtao的个人静态网站 - Atom Feed" href="https://dingdingtao.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="Vue语法模板 | dingdingtao的个人静态网站 - Atom Feed" href="https://dingdingtao.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 <!-- gitalk -->
@@ -57,15 +57,32 @@
 
 
 
-    <meta name="description" content="URL
-let url_reg = /(http[s]?:\/\/)?[^\s([&quot;&lt;,&gt;]*\.[^\s[&quot;,&gt;&lt;]*/
+    <meta name="description" content="
+Vue常用指令
 
-纯数字
-let num_reg = /^[0-9]*$/
 
-邮箱
-le..." />
-    <meta name="keywords" content="JavaScript" />
+常用指令
+
+
+
+指令
+说明
+
+
+
+
+v-model
+用来在表单控件元素上创建双向数据绑定，根据表单上的值，自动更新绑定的元素的值
+
+
+v-on
+用于监听 DOM 事件
+
+
+v-bind
+用来响应地更新 HTML 属性
+..." />
+    <meta name="keywords" content="Vue" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
@@ -131,74 +148,137 @@ le..." />
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              JavaScript常用正则
+              Vue语法模板
             </h2>
             <div class="post-info">
               <span>
-                2021-03-10
+                2021-03-11
               </span>
               <span>
-                1 min read
+                3 min read
               </span>
               
-                <a href="https://dingdingtao.github.io/tag/L8Ul2axDW/" class="post-tag">
-                  # JavaScript
+                <a href="https://dingdingtao.github.io/tag/JavaScript/Vue/" class="post-tag">
+                  # Vue
                 </a>
               
             </div>
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <h3 id="url">URL</h3>
-<pre><code class="language-javascript">let url_reg = /(http[s]?:\/\/)?[^\s([&quot;&lt;,&gt;]*\.[^\s[&quot;,&gt;&lt;]*/
+                <center>
+Vue常用指令
+</center>
+<!-- more -->
+<h2 id="常用指令">常用指令</h2>
+<table>
+<thead>
+<tr>
+<th>指令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>v-model</td>
+<td>用来在表单控件元素上创建双向数据绑定，根据表单上的值，自动更新绑定的元素的值</td>
+</tr>
+<tr>
+<td>v-on</td>
+<td>用于监听 DOM 事件</td>
+</tr>
+<tr>
+<td>v-bind</td>
+<td>用来响应地更新 HTML 属性</td>
+</tr>
+<tr>
+<td>v-if</td>
+<td>根据表达式的值(true 或 false )来决定是否插入元素（后面可跟v-else 、v-else-if ）</td>
+</tr>
+<tr>
+<td>v-html</td>
+<td>用于输出 html 代码</td>
+</tr>
+<tr>
+<td>v-show</td>
+<td>根据条件展示元素</td>
+</tr>
+<tr>
+<td>v-for</td>
+<td>需要以 site in sites 形式的特殊语法， sites 是源数据数组并且 site 是数组元素迭代的别名</td>
+</tr>
+</tbody>
+</table>
+<h3 id="修饰符">修饰符</h3>
+<p>修饰符是以半角句号<code>.</code>指明的特殊后缀，用于指出一个指令应该以特殊方式绑定。例如，<code>.prevent</code>修饰符告诉<code>v-on</code>指令对于触发的事件调用 <strong>event.preventDefault()</strong>：</p>
+<pre><code class="language-html">&lt;form v-on:submit.prevent=&quot;onSubmit&quot;&gt;&lt;/form&gt;
 </code></pre>
-<h3 id="纯数字">纯数字</h3>
-<pre><code class="language-javascript">let num_reg = /^[0-9]*$/
+<h3 id="过滤器">过滤器</h3>
+<p>Vue.js 允许你自定义过滤器，被用作一些常见的文本格式化。由&quot;管道符&quot;指示, 格式如下：</p>
+<pre><code class="language-html">&lt;!-- 在两个大括号中 --&gt;
+{{ message | capitalize }}
+&lt;!-- 在 v-bind 指令中 --&gt;
+&lt;div v-bind:id=&quot;rawId | formatId&quot;&gt;&lt;/div&gt;
 </code></pre>
-<h3 id="邮箱">邮箱</h3>
-<pre><code class="language-javascript">let mail_reg = /\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/
+<p>过滤器函数接受表达式的值作为第一个参数。<br>
+以下实例对输入的字符串第一个字母转为大写：</p>
+<pre><code class="language-html">&lt;div id=&quot;app&quot;&gt;
+  {{ message | capitalize }}
+&lt;/div&gt;
+    
+&lt;script&gt;
+new Vue({
+  el: '#app',
+  data: {
+    message: 'runoob'
+  },
+  filters: {
+    capitalize: function (value) {
+      if (!value) return ''
+      value = value.toString()
+      return value.charAt(0).toUpperCase() + value.slice(1)
+    }
+  }
+})
+&lt;/script&gt;
 </code></pre>
-<h3 id="中文与全角符号">中文与全角符号</h3>
-<pre><code class="language-javascript">let chinese_reg = /[\u3000-\u301e\ufe10-\ufe19\ufe30-\ufe44\ufe50-\ufe6b\uff01-\uffee]/
+<p><strong>过滤器可以串联</strong>：</p>
+<pre><code class="language-html">{{ message | filterA | filterB }}
 </code></pre>
-<h3 id="身份证不验证是否合法">身份证(不验证是否合法)</h3>
-<pre><code class="language-javascript">let idcard_reg = /\d{15}(\d\d[0-9xX])?/
+<p>过滤器是 JavaScript 函数，因此<strong>可以接受参数</strong>：</p>
+<pre><code class="language-html">{{ message | filterA('arg1', arg2) }}
 </code></pre>
-<h3 id="仅包含英文字母的字符串">仅包含英文字母的字符串</h3>
-<pre><code class="language-javascript">let eng_reg = /^[A-Za-z]+$/
+<p>这里，message 是第一个参数，字符串 'arg1' 将传给过滤器作为第二个参数， arg2 表达式的值将被求值然后传给过滤器作为第三个参数。</p>
+<h3 id="缩写">缩写</h3>
+<p>Vue.js 为两个最为常用的指令提供了特别的缩写：<br>
+<strong>v-bind 缩写</strong></p>
+<pre><code class="language-html">&lt;!-- 完整语法 --&gt;
+&lt;a v-bind:href=&quot;url&quot;&gt;&lt;/a&gt;
+&lt;!-- 缩写 --&gt;
+&lt;a :href=&quot;url&quot;&gt;&lt;/a&gt;
 </code></pre>
-<h3 id="正整数">正整数</h3>
-<pre><code class="language-javascript">let digital_reg = /^\d+$/
+<p><strong>v-on 缩写</strong></p>
+<pre><code class="language-html">&lt;!-- 完整语法 --&gt;
+&lt;a v-on:click=&quot;doSomething&quot;&gt;&lt;/a&gt;
+&lt;!-- 缩写 --&gt;
+&lt;a @click=&quot;doSomething&quot;&gt;&lt;/a&gt;
 </code></pre>
-<h3 id="负整数">负整数</h3>
-<pre><code class="language-javascript">let digital_reg = /^((-\d+)|(0+))$/
-</code></pre>
-<h3 id="数字正负数-小数">数字(正负数、小数)</h3>
-<pre><code class="language-javascript">let digital_reg = /^(\-|\+)?\d+(\.\d+)?$/
-</code></pre>
-<h3 id="ipv4">IPv4</h3>
-<pre><code class="language-javascript">let ipv4_reg = /^((2(5[0-5]|[0-4]\d))|[0-1]?\d{1,2})(\.((2(5[0-5]|[0-4]\d))|[0-1]?\d{1,2})){3}$/
-</code></pre>
+<h2 id="参考">参考</h2>
+<p><a href="https://www.runoob.com/vue2/vue-template-syntax.html">Vue.js 模板语法</a></p>
 
               </div>
               <div class="toc-container">
                 <ul class="markdownIt-TOC">
 <li>
 <ul>
-<li>
+<li><a href="#%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4">常用指令</a>
 <ul>
-<li><a href="#url">URL</a></li>
-<li><a href="#%E7%BA%AF%E6%95%B0%E5%AD%97">纯数字</a></li>
-<li><a href="#%E9%82%AE%E7%AE%B1">邮箱</a></li>
-<li><a href="#%E4%B8%AD%E6%96%87%E4%B8%8E%E5%85%A8%E8%A7%92%E7%AC%A6%E5%8F%B7">中文与全角符号</a></li>
-<li><a href="#%E8%BA%AB%E4%BB%BD%E8%AF%81%E4%B8%8D%E9%AA%8C%E8%AF%81%E6%98%AF%E5%90%A6%E5%90%88%E6%B3%95">身份证(不验证是否合法)</a></li>
-<li><a href="#%E4%BB%85%E5%8C%85%E5%90%AB%E8%8B%B1%E6%96%87%E5%AD%97%E6%AF%8D%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2">仅包含英文字母的字符串</a></li>
-<li><a href="#%E6%AD%A3%E6%95%B4%E6%95%B0">正整数</a></li>
-<li><a href="#%E8%B4%9F%E6%95%B4%E6%95%B0">负整数</a></li>
-<li><a href="#%E6%95%B0%E5%AD%97%E6%AD%A3%E8%B4%9F%E6%95%B0-%E5%B0%8F%E6%95%B0">数字(正负数、小数)</a></li>
-<li><a href="#ipv4">IPv4</a></li>
+<li><a href="#%E4%BF%AE%E9%A5%B0%E7%AC%A6">修饰符</a></li>
+<li><a href="#%E8%BF%87%E6%BB%A4%E5%99%A8">过滤器</a></li>
+<li><a href="#%E7%BC%A9%E5%86%99">缩写</a></li>
 </ul>
 </li>
+<li><a href="#%E5%8F%82%E8%80%83">参考</a></li>
 </ul>
 </li>
 </ul>
@@ -211,9 +291,9 @@ le..." />
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://dingdingtao.github.io/post/maven-pom-biao-qian-da-quan-xiang-jie/">
+            <a href="https://dingdingtao.github.io/post/javascript-chang-yong-zheng-ze/">
               <h3 class="post-title">
-                Maven-POM标签大全详解
+                JavaScript常用正则
               </h3>
             </a>
           </div>

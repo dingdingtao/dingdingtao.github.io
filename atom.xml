@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://dingdingtao.github.io</id>
     <title>dingdingtao的个人静态网站</title>
-    <updated>2021-03-10T10:01:17.524Z</updated>
+    <updated>2021-03-15T08:25:14.166Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://dingdingtao.github.io"/>
     <link rel="self" href="https://dingdingtao.github.io/atom.xml"/>
@@ -10,6 +10,117 @@
     <logo>https://dingdingtao.github.io/images/avatar.png</logo>
     <icon>https://dingdingtao.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, dingdingtao的个人静态网站</rights>
+    <entry>
+        <title type="html"><![CDATA[Vue语法模板]]></title>
+        <id>https://dingdingtao.github.io/post/vue-yu-fa-mo-ban/</id>
+        <link href="https://dingdingtao.github.io/post/vue-yu-fa-mo-ban/">
+        </link>
+        <updated>2021-03-11T02:12:19.000Z</updated>
+        <summary type="html"><![CDATA[<center>
+Vue常用指令
+</center>
+]]></summary>
+        <content type="html"><![CDATA[<center>
+Vue常用指令
+</center>
+<!-- more -->
+<h2 id="常用指令">常用指令</h2>
+<table>
+<thead>
+<tr>
+<th>指令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>v-model</td>
+<td>用来在表单控件元素上创建双向数据绑定，根据表单上的值，自动更新绑定的元素的值</td>
+</tr>
+<tr>
+<td>v-on</td>
+<td>用于监听 DOM 事件</td>
+</tr>
+<tr>
+<td>v-bind</td>
+<td>用来响应地更新 HTML 属性</td>
+</tr>
+<tr>
+<td>v-if</td>
+<td>根据表达式的值(true 或 false )来决定是否插入元素（后面可跟v-else 、v-else-if ）</td>
+</tr>
+<tr>
+<td>v-html</td>
+<td>用于输出 html 代码</td>
+</tr>
+<tr>
+<td>v-show</td>
+<td>根据条件展示元素</td>
+</tr>
+<tr>
+<td>v-for</td>
+<td>需要以 site in sites 形式的特殊语法， sites 是源数据数组并且 site 是数组元素迭代的别名</td>
+</tr>
+</tbody>
+</table>
+<h3 id="修饰符">修饰符</h3>
+<p>修饰符是以半角句号<code>.</code>指明的特殊后缀，用于指出一个指令应该以特殊方式绑定。例如，<code>.prevent</code>修饰符告诉<code>v-on</code>指令对于触发的事件调用 <strong>event.preventDefault()</strong>：</p>
+<pre><code class="language-html">&lt;form v-on:submit.prevent=&quot;onSubmit&quot;&gt;&lt;/form&gt;
+</code></pre>
+<h3 id="过滤器">过滤器</h3>
+<p>Vue.js 允许你自定义过滤器，被用作一些常见的文本格式化。由&quot;管道符&quot;指示, 格式如下：</p>
+<pre><code class="language-html">&lt;!-- 在两个大括号中 --&gt;
+{{ message | capitalize }}
+&lt;!-- 在 v-bind 指令中 --&gt;
+&lt;div v-bind:id=&quot;rawId | formatId&quot;&gt;&lt;/div&gt;
+</code></pre>
+<p>过滤器函数接受表达式的值作为第一个参数。<br>
+以下实例对输入的字符串第一个字母转为大写：</p>
+<pre><code class="language-html">&lt;div id=&quot;app&quot;&gt;
+  {{ message | capitalize }}
+&lt;/div&gt;
+    
+&lt;script&gt;
+new Vue({
+  el: '#app',
+  data: {
+    message: 'runoob'
+  },
+  filters: {
+    capitalize: function (value) {
+      if (!value) return ''
+      value = value.toString()
+      return value.charAt(0).toUpperCase() + value.slice(1)
+    }
+  }
+})
+&lt;/script&gt;
+</code></pre>
+<p><strong>过滤器可以串联</strong>：</p>
+<pre><code class="language-html">{{ message | filterA | filterB }}
+</code></pre>
+<p>过滤器是 JavaScript 函数，因此<strong>可以接受参数</strong>：</p>
+<pre><code class="language-html">{{ message | filterA('arg1', arg2) }}
+</code></pre>
+<p>这里，message 是第一个参数，字符串 'arg1' 将传给过滤器作为第二个参数， arg2 表达式的值将被求值然后传给过滤器作为第三个参数。</p>
+<h3 id="缩写">缩写</h3>
+<p>Vue.js 为两个最为常用的指令提供了特别的缩写：<br>
+<strong>v-bind 缩写</strong></p>
+<pre><code class="language-html">&lt;!-- 完整语法 --&gt;
+&lt;a v-bind:href=&quot;url&quot;&gt;&lt;/a&gt;
+&lt;!-- 缩写 --&gt;
+&lt;a :href=&quot;url&quot;&gt;&lt;/a&gt;
+</code></pre>
+<p><strong>v-on 缩写</strong></p>
+<pre><code class="language-html">&lt;!-- 完整语法 --&gt;
+&lt;a v-on:click=&quot;doSomething&quot;&gt;&lt;/a&gt;
+&lt;!-- 缩写 --&gt;
+&lt;a @click=&quot;doSomething&quot;&gt;&lt;/a&gt;
+</code></pre>
+<h2 id="参考">参考</h2>
+<p><a href="https://www.runoob.com/vue2/vue-template-syntax.html">Vue.js 模板语法</a></p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[JavaScript常用正则]]></title>
         <id>https://dingdingtao.github.io/post/javascript-chang-yong-zheng-ze/</id>
@@ -2134,183 +2245,6 @@ rn1: 15号和16号并列第3, 13号排第5
 rn2: 15号和16号并列第3, 13号排第4
 rn3: 如果相等，则按记录值排序，生成唯一的次序，如果所有记录值都相等，或许会随机排吧。
 </code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Hive内置函数]]></title>
-        <id>https://dingdingtao.github.io/post/hive-nei-zhi-han-shu/</id>
-        <link href="https://dingdingtao.github.io/post/hive-nei-zhi-han-shu/">
-        </link>
-        <updated>2021-03-01T02:00:03.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="内置函数">内置函数</h2>
-<table>
-<thead>
-<tr>
-<th>返回类型</th>
-<th>签名</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>BIGINT</td>
-<td>round(double a)</td>
-<td>返回BIGINT最近的double值</td>
-</tr>
-<tr>
-<td>BIGINT</td>
-<td>floor(double a)</td>
-<td>返回最大BIGINT值等于或小于double</td>
-</tr>
-<tr>
-<td>BIGINT</td>
-<td>ceil(double a)</td>
-<td>返回最小BIGINT值等于或大于double</td>
-</tr>
-<tr>
-<td>DOUBLE</td>
-<td>rand(),rand(int seed)</td>
-<td>它返回一个随机数，从行改变到行</td>
-</tr>
-<tr>
-<td>STRING</td>
-<td>concat(string A,string B,...)</td>
-<td>它返回从A后串联B产生的字符串</td>
-</tr>
-<tr>
-<td>STRING</td>
-<td>substr(string A,int start)</td>
-<td>它返回一个起始，从起始位置的子字符串，直到A结束</td>
-</tr>
-<tr>
-<td>STRING</td>
-<td>substr(string A, int start, int length)</td>
-<td>返回从给定长度的起始start位置开始的字符串</td>
-</tr>
-<tr>
-<td>STRING</td>
-<td>upper(string A)</td>
-<td>它返回从转换的所有字符为大写产生的字符串</td>
-</tr>
-<tr>
-<td>STRING</td>
-<td>ucase(string A)</td>
-<td>和上面的一样</td>
-</tr>
-<tr>
-<td>STRING</td>
-<td>lower(string A)</td>
-<td>它返回转换B的所有字符为小写产生的字符串</td>
-</tr>
-<tr>
-<td>STRING</td>
-<td>lcase(string A)</td>
-<td>和上面的一样</td>
-</tr>
-<tr>
-<td>STRING</td>
-<td>trim(string A)</td>
-<td>它返回字符串从A.两端修剪空格的结果</td>
-</tr>
-<tr>
-<td>STRING</td>
-<td>ltrim(string A)</td>
-<td>它返回A从一开始修整空格产生的字符串(左手侧)</td>
-</tr>
-<tr>
-<td>STRING</td>
-<td>rtrim(string A)</td>
-<td>它返回A从结束修整空格产生的字符串(右侧)</td>
-</tr>
-<tr>
-<td>STRING</td>
-<td>regexp_replace(string A, string B, string C)</td>
-<td>它返回从替换所有子在B结果配合C.在Java正则表达式语法的字符串</td>
-</tr>
-<tr>
-<td>INT</td>
-<td>size(Map&lt;K,V&gt;)</td>
-<td>它返回在映射类型的元素的数量</td>
-</tr>
-<tr>
-<td>INT</td>
-<td>size(Array<T>)</td>
-<td>它返回在数组类型元素的数量</td>
-</tr>
-<tr>
-<td>value of <type></td>
-<td>cast(<expr> as <type>)</td>
-<td>它把表达式的结果expr&lt;类型&gt;如cast('1'作为BIGINT)代表整体转换为字符串'1'。如果转换不成功，返回的是NULL</td>
-</tr>
-<tr>
-<td>STRING</td>
-<td>from_unixtime(int unixtime)</td>
-<td>转换的秒数从Unix纪元(1970-01-0100:00:00 UTC)代表那一刻，在当前系统时区的时间戳字符的串格式：&quot;1970-01-01 00:00:00&quot;</td>
-</tr>
-<tr>
-<td>STRING</td>
-<td>to_date(string timestamp)</td>
-<td>返回一个字符串时间戳的日期部分：to_date(&quot;1970-01-01 00:00:00&quot;) = &quot;1970-01-01&quot;</td>
-</tr>
-<tr>
-<td>INT</td>
-<td>year(string date)</td>
-<td>返回年份部分的日期或时间戳字符串：year(&quot;1970-01-01 00:00:00&quot;) = 1970, year(&quot;1970-01-01&quot;) = 1970</td>
-</tr>
-<tr>
-<td>INT</td>
-<td>month(string date)</td>
-<td>返回日期或时间戳记字符串月份部分：month(&quot;1970-11-01 00:00:00&quot;) = 11, month(&quot;1970-11-01&quot;) = 11</td>
-</tr>
-<tr>
-<td>INT</td>
-<td>day(string date)</td>
-<td>返回日期或时间戳记字符串当天部分：day(&quot;1970-11-01 00:00:00&quot;) = 1, day(&quot;1970-11-01&quot;) = 1</td>
-</tr>
-<tr>
-<td>STRING</td>
-<td>get_json_object(string json_string, string path)</td>
-<td>提取从基于指定的JSON路径的JSON字符串JSON对象，并返回提取的JSON字符串的JSON对象。如果输入的JSON字符串无效，返回NULL</td>
-</tr>
-</tbody>
-</table>
-<h2 id="聚合函数">聚合函数</h2>
-<table>
-<thead>
-<tr>
-<th>返回类型</th>
-<th>签名</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>BIGINT</td>
-<td>count(*), count(expr)</td>
-<td>返回检索行的总数</td>
-</tr>
-<tr>
-<td>DOUBLE</td>
-<td>sum(col), sum(DISTINCT col)</td>
-<td>返回该组或该组中的列的不同值的分组和所有元素的总和</td>
-</tr>
-<tr>
-<td>DOUBLE</td>
-<td>avg(col), avg(DISTINCT col)</td>
-<td>返回上述组或该组中的列的不同值的元素的平均值</td>
-</tr>
-<tr>
-<td>DOUBLE</td>
-<td>min(col)</td>
-<td>返回该组中的列的最小值</td>
-</tr>
-<tr>
-<td>DOUBLE</td>
-<td>max(col)</td>
-<td>返回该组中的列的最大值</td>
-</tr>
-</tbody>
-</table>
 ]]></content>
     </entry>
 </feed>
