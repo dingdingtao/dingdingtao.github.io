@@ -3,11 +3,11 @@
     <meta charset="utf-8" />
 <!-- <meta name="viewport" content="width=device-width, initial-scale=1" /> -->
 <meta name="viewport" content="width=device-width" /> 
-<title>Hive内置函数 | dingdingtao的个人静态网站</title>
+<title>Hive逻辑运算 | dingdingtao的个人静态网站</title>
 <link rel="shortcut icon" href="https://dingdingtao.github.io/favicon.ico?v=1616129195499">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://dingdingtao.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="Hive内置函数 | dingdingtao的个人静态网站 - Atom Feed" href="https://dingdingtao.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="Hive逻辑运算 | dingdingtao的个人静态网站 - Atom Feed" href="https://dingdingtao.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 <!-- gitalk -->
@@ -57,29 +57,15 @@
 
 
 
-    <meta name="description" content="内置函数
-
-
-
-返回类型
-签名
-描述
-
-
-
-
-BIGINT
-round(double a)
-返回BIGINT最近的double值
-
-
-BIGINT
-floor(double a)
-返回最大BIGINT值等于或小于double
-
-
-BIGIN..." />
-    <meta name="keywords" content="Hive" />
+    <meta name="description" content="逻辑与
+语法: A AND B
+操作类型：boolean
+说明：如果A和B均为TRUE，则为TRUE；否则为FALSE。如果A为NULL或B为NULL，则为NULL
+逻辑或
+语法: A OR B
+操作类型：boolean
+说明：如果A为TR..." />
+    <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
@@ -145,201 +131,41 @@ BIGIN..." />
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              Hive内置函数
+              Hive逻辑运算
             </h2>
             <div class="post-info">
               <span>
-                2021-03-01
+                2021-03-19
               </span>
               <span>
-                4 min read
+                1 min read
               </span>
-              
-                <a href="https://dingdingtao.github.io/tag/hive/" class="post-tag">
-                  # Hive
-                </a>
               
             </div>
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <h2 id="内置函数">内置函数</h2>
-<table>
-<thead>
-<tr>
-<th>返回类型</th>
-<th>签名</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>BIGINT</td>
-<td>round(double a)</td>
-<td>返回BIGINT最近的double值</td>
-</tr>
-<tr>
-<td>BIGINT</td>
-<td>floor(double a)</td>
-<td>返回最大BIGINT值等于或小于double</td>
-</tr>
-<tr>
-<td>BIGINT</td>
-<td>ceil(double a)</td>
-<td>返回最小BIGINT值等于或大于double</td>
-</tr>
-<tr>
-<td>DOUBLE</td>
-<td>rand(),rand(int seed)</td>
-<td>它返回一个随机数，从行改变到行</td>
-</tr>
-<tr>
-<td>STRING</td>
-<td>concat(string A,string B,...)</td>
-<td>它返回从A后串联B产生的字符串</td>
-</tr>
-<tr>
-<td>STRING</td>
-<td>substr(string A,int start)</td>
-<td>它返回一个起始，从起始位置的子字符串，直到A结束</td>
-</tr>
-<tr>
-<td>STRING</td>
-<td>substr(string A, int start, int length)</td>
-<td>返回从给定长度的起始start位置开始的字符串</td>
-</tr>
-<tr>
-<td>STRING</td>
-<td>upper(string A)</td>
-<td>它返回从转换的所有字符为大写产生的字符串</td>
-</tr>
-<tr>
-<td>STRING</td>
-<td>ucase(string A)</td>
-<td>和上面的一样</td>
-</tr>
-<tr>
-<td>STRING</td>
-<td>lower(string A)</td>
-<td>它返回转换B的所有字符为小写产生的字符串</td>
-</tr>
-<tr>
-<td>STRING</td>
-<td>lcase(string A)</td>
-<td>和上面的一样</td>
-</tr>
-<tr>
-<td>STRING</td>
-<td>trim(string A)</td>
-<td>它返回字符串从A.两端修剪空格的结果</td>
-</tr>
-<tr>
-<td>STRING</td>
-<td>ltrim(string A)</td>
-<td>它返回A从一开始修整空格产生的字符串(左手侧)</td>
-</tr>
-<tr>
-<td>STRING</td>
-<td>rtrim(string A)</td>
-<td>它返回A从结束修整空格产生的字符串(右侧)</td>
-</tr>
-<tr>
-<td>STRING</td>
-<td>regexp_replace(string A, string B, string C)</td>
-<td>它返回从替换所有子在B结果配合C.在Java正则表达式语法的字符串</td>
-</tr>
-<tr>
-<td>INT</td>
-<td>size(Map&lt;K,V&gt;)</td>
-<td>它返回在映射类型的元素的数量</td>
-</tr>
-<tr>
-<td>INT</td>
-<td>size(Array<T>)</td>
-<td>它返回在数组类型元素的数量</td>
-</tr>
-<tr>
-<td>value of <type></td>
-<td>cast(<expr> as <type>)</td>
-<td>它把表达式的结果expr&lt;类型&gt;如cast('1'作为BIGINT)代表整体转换为字符串'1'。如果转换不成功，返回的是NULL</td>
-</tr>
-<tr>
-<td>STRING</td>
-<td>from_unixtime(int unixtime)</td>
-<td>转换的秒数从Unix纪元(1970-01-0100:00:00 UTC)代表那一刻，在当前系统时区的时间戳字符的串格式：&quot;1970-01-01 00:00:00&quot;</td>
-</tr>
-<tr>
-<td>STRING</td>
-<td>to_date(string timestamp)</td>
-<td>返回一个字符串时间戳的日期部分：to_date(&quot;1970-01-01 00:00:00&quot;) = &quot;1970-01-01&quot;</td>
-</tr>
-<tr>
-<td>INT</td>
-<td>year(string date)</td>
-<td>返回年份部分的日期或时间戳字符串：year(&quot;1970-01-01 00:00:00&quot;) = 1970, year(&quot;1970-01-01&quot;) = 1970</td>
-</tr>
-<tr>
-<td>INT</td>
-<td>month(string date)</td>
-<td>返回日期或时间戳记字符串月份部分：month(&quot;1970-11-01 00:00:00&quot;) = 11, month(&quot;1970-11-01&quot;) = 11</td>
-</tr>
-<tr>
-<td>INT</td>
-<td>day(string date)</td>
-<td>返回日期或时间戳记字符串当天部分：day(&quot;1970-11-01 00:00:00&quot;) = 1, day(&quot;1970-11-01&quot;) = 1</td>
-</tr>
-<tr>
-<td>STRING</td>
-<td>get_json_object(string json_string, string path)</td>
-<td>提取从基于指定的JSON路径的JSON字符串JSON对象，并返回提取的JSON字符串的JSON对象。如果输入的JSON字符串无效，返回NULL</td>
-</tr>
-</tbody>
-</table>
-<h2 id="聚合函数">聚合函数</h2>
-<table>
-<thead>
-<tr>
-<th>返回类型</th>
-<th>签名</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>BIGINT</td>
-<td>count(*), count(expr)</td>
-<td>返回检索行的总数</td>
-</tr>
-<tr>
-<td>DOUBLE</td>
-<td>sum(col), sum(DISTINCT col)</td>
-<td>返回该组或该组中的列的不同值的分组和所有元素的总和</td>
-</tr>
-<tr>
-<td>DOUBLE</td>
-<td>avg(col), avg(DISTINCT col)</td>
-<td>返回上述组或该组中的列的不同值的元素的平均值</td>
-</tr>
-<tr>
-<td>DOUBLE</td>
-<td>min(col)</td>
-<td>返回该组中的列的最小值</td>
-</tr>
-<tr>
-<td>DOUBLE</td>
-<td>max(col)</td>
-<td>返回该组中的列的最大值</td>
-</tr>
-</tbody>
-</table>
+                <h2 id="逻辑与">逻辑与</h2>
+<p><strong>语法</strong>: A AND B<br>
+<strong>操作类型</strong>：boolean<br>
+<strong>说明</strong>：如果A和B均为TRUE，则为TRUE；否则为FALSE。如果A为NULL或B为NULL，则为NULL</p>
+<h2 id="逻辑或">逻辑或</h2>
+<p><strong>语法</strong>: A OR B<br>
+<strong>操作类型</strong>：boolean<br>
+<strong>说明</strong>：如果A为TRUE，或者B为TRUE，或者A和B均为TRUE，则为TRUE；否则为FALSE</p>
+<h2 id="逻辑非">逻辑非</h2>
+<p><strong>语法</strong>: NOT A<br>
+<strong>操作类型</strong>：boolean<br>
+<strong>说明</strong>：如果A为FALSE，或者A为NULL，则为TRUE；否则为FALSE</p>
 
               </div>
               <div class="toc-container">
                 <ul class="markdownIt-TOC">
 <li>
 <ul>
-<li><a href="#%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0">内置函数</a></li>
-<li><a href="#%E8%81%9A%E5%90%88%E5%87%BD%E6%95%B0">聚合函数</a></li>
+<li><a href="#%E9%80%BB%E8%BE%91%E4%B8%8E">逻辑与</a></li>
+<li><a href="#%E9%80%BB%E8%BE%91%E6%88%96">逻辑或</a></li>
+<li><a href="#%E9%80%BB%E8%BE%91%E9%9D%9E">逻辑非</a></li>
 </ul>
 </li>
 </ul>
@@ -352,9 +178,9 @@ BIGIN..." />
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://dingdingtao.github.io/post/hive-lie-zhuan-hang/">
+            <a href="https://dingdingtao.github.io/post/hive-shu-zhi-yun-suan/">
               <h3 class="post-title">
-                Hive列转行
+                Hive数值运算
               </h3>
             </a>
           </div>
