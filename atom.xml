@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://dingdingtao.github.io</id>
     <title>dingdingtao的个人静态网站</title>
-    <updated>2021-03-19T04:46:38.495Z</updated>
+    <updated>2021-03-31T06:40:45.328Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://dingdingtao.github.io"/>
     <link rel="self" href="https://dingdingtao.github.io/atom.xml"/>
@@ -10,6 +10,338 @@
     <logo>https://dingdingtao.github.io/images/avatar.png</logo>
     <icon>https://dingdingtao.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, dingdingtao的个人静态网站</rights>
+    <entry>
+        <title type="html"><![CDATA[Javascript箭头函数]]></title>
+        <id>https://dingdingtao.github.io/post/javascript-jian-tou-han-shu/</id>
+        <link href="https://dingdingtao.github.io/post/javascript-jian-tou-han-shu/">
+        </link>
+        <updated>2021-03-31T06:14:06.000Z</updated>
+        <summary type="html"><![CDATA[<center>
+Javascript箭头函数的基本语法、使用场景和使用需要注意的点。
+</center>
+]]></summary>
+        <content type="html"><![CDATA[<center>
+Javascript箭头函数的基本语法、使用场景和使用需要注意的点。
+</center>
+<!-- more -->
+<h2 id="箭头函数">箭头函数</h2>
+<p>ES6 允许使用“箭头”(<code>=&gt;</code>)定义函数</p>
+<pre><code class="language-javascript">var f = v =&gt; v;
+
+//等同于
+var f = function(v) {
+    return v;
+};
+</code></pre>
+<p>如果箭头函数不需要参数或需要多个参数，就使用一个圆括号代表参数部分。</p>
+<pre><code class="language-javascript">var f = () =&gt; 5;
+//等同于
+var f = function() { return 5 };
+
+var sum = (num1, num2) =&gt; num1 + num2;
+//等同于
+var sum = function(num1, num2) {
+    return num1 + num2;
+};
+</code></pre>
+<p>如果箭头函数的代码块部分多于一条语句，就要使用大括号将它们括起来，并且使用<code>return</code>语句返回。</p>
+<pre><code class="language-javascript">var sum = (num1, num2) =&gt; { return num1 + num2; }
+</code></pre>
+<p>由于大括号被解释为代码块，所以如果箭头函数直接返回一个对象，必须在对象外面加上括号，否则会报错。</p>
+<pre><code class="language-javascript">// 报错
+let getTempItem = id =&gt; { id: id, name: &quot;Temp&quot; };
+
+// 不报错
+let getTempItem = id =&gt; ({ id: id, name: &quot;Temp&quot; });
+</code></pre>
+<p>下面是一种特殊情况，虽然可以运行，但会得到错误的结果。</p>
+<pre><code class="language-javascript">let foo = () =&gt; { a: 1 };
+foo() // undefined
+</code></pre>
+<p>上面代码中，原始意图是返回一个对象<code>{ a: 1 }</code>，但是由于引擎认为大括号是代码块，所以执行了一行语句<code>a: 1</code>。这时，<code>a</code>可以被解释为语句的标签，因此实际执行的语句是<code>1;</code>，然后函数就结束了，没有返回值。</p>
+<p>如果箭头函数只有一行语句，且不需要返回值，可以采用下面的写法，就不用写大括号了。</p>
+<pre><code class="language-javascript">let fn = () =&gt; void doesNotReturn();
+</code></pre>
+<p>箭头函数可以与变量解构结合使用。</p>
+<pre><code class="language-javascript">const full = ({ first, last }) =&gt; first + ' ' + last;
+
+// 等同于
+function full(person) {
+  return person.first + ' ' + person.last;
+}
+</code></pre>
+<p>箭头函数使得表达更加简洁。</p>
+<pre><code class="language-javascript">const isEven = n =&gt; n % 2 === 0;
+const square = n =&gt; n * n;
+</code></pre>
+<p>上面代码只用了两行，就定义了两个简单的工具函数。如果不用箭头函数，可能就要占用多行，而且还不如现在这样写醒目。</p>
+<p>箭头函数的一个用处是简化回调函数。</p>
+<pre><code class="language-javascript">// 正常函数写法
+[1,2,3].map(function (x) {
+  return x * x;
+});
+
+// 箭头函数写法
+[1,2,3].map(x =&gt; x * x);
+</code></pre>
+<p>另一个例子是</p>
+<pre><code class="language-javascript">// 正常函数写法
+var result = values.sort(function (a, b) {
+  return a - b;
+});
+
+// 箭头函数写法
+var result = values.sort((a, b) =&gt; a - b);
+</code></pre>
+<p>下面是 rest 参数与箭头函数结合的例子。</p>
+<pre><code class="language-javascript">const numbers = (...nums) =&gt; nums;
+
+numbers(1, 2, 3, 4, 5)
+// [1,2,3,4,5]
+
+const headAndTail = (head, ...tail) =&gt; [head, tail];
+
+headAndTail(1, 2, 3, 4, 5)
+// [1,[2,3,4,5]]
+</code></pre>
+<h2 id="使用注意点">使用注意点</h2>
+<p>箭头函数有几个使用注意点。</p>
+<p>（1）函数体内的<code>this</code>对象，就是定义时所在的对象，而不是使用时所在的对象。</p>
+<p>（2）不可以当作构造函数，也就是说，不可以使用<code>new</code>命令，否则会抛出一个错误。</p>
+<p>（3）不可以使用<code>arguments</code>对象，该对象在函数体内不存在。如果要用，可以用 rest 参数代替。</p>
+<p>（4）不可以使用<code>yield</code>命令，因此箭头函数不能用作 Generator 函数。</p>
+<p>上面四点中，第一点尤其值得注意。<code>this</code>对象的指向是可变的，但是在箭头函数中，它是固定的。</p>
+<pre><code class="language-javascript">function foo() {
+  setTimeout(() =&gt; {
+    console.log('id:', this.id);
+  }, 100);
+}
+
+var id = 21;
+
+foo.call({ id: 42 });
+// id: 42
+</code></pre>
+<p>上面代码中，<code>setTimeout()</code>的参数是一个箭头函数，这个箭头函数的定义生效是在<code>foo</code>函数生成时，而它的真正执行要等到 100 毫秒后。如果是普通函数，执行时<code>this</code>应该指向全局对象<code>window</code>，这时应该输出<code>21</code>。但是，箭头函数导致<code>this</code>总是指向函数定义生效时所在的对象（本例是<code>{id: 42}</code>），所以打印出来的是<code>42</code>。</p>
+<p>箭头函数可以让<code>setTimeout</code>里面的<code>this</code>，绑定定义时所在的作用域，而不是指向运行时所在的作用域。下面是另一个例子。</p>
+<pre><code class="language-javascript">function Timer() {
+  this.s1 = 0;
+  this.s2 = 0;
+  // 箭头函数
+  setInterval(() =&gt; this.s1++, 1000);
+  // 普通函数
+  setInterval(function () {
+    this.s2++;
+  }, 1000);
+}
+
+var timer = new Timer();
+
+setTimeout(() =&gt; console.log('s1: ', timer.s1), 3100);
+setTimeout(() =&gt; console.log('s2: ', timer.s2), 3100);
+// s1: 3
+// s2: 0
+</code></pre>
+<p>上面代码中，<code>Timer</code>函数内部设置了两个定时器，分别使用了箭头函数和普通函数。前者的<code>this</code>绑定定义时所在的作用域（即<code>Timer</code>函数），后者的<code>this</code>指向运行时所在的作用域（即全局对象）。所以，3100 毫秒之后，<code>timer.s1</code>被更新了 3 次，而<code>timer.s2</code>一次都没更新。</p>
+<p>箭头函数可以让<code>this</code>指向固定化，这种特性很有利于封装回调函数。下面是一个例子，DOM 事件的回调函数封装在一个对象里面。</p>
+<pre><code class="language-javascript">var handler = {
+  id: '123456',
+
+  init: function() {
+    document.addEventListener('click',
+      event =&gt; this.doSomething(event.type), false);
+  },
+
+  doSomething: function(type) {
+    console.log('Handling ' + type  + ' for ' + this.id);
+  }
+};
+</code></pre>
+<p>上面代码的<code>init</code>方法中，使用了箭头函数，这导致这个箭头函数里面的<code>this</code>，总是指向<code>handler</code>对象。否则，回调函数运行时，<code>this.doSomething</code>这一行会报错，因为此时<code>this</code>指向<code>document</code>对象。</p>
+<p><code>this</code>指向的固定化，并不是因为箭头函数内部有绑定<code>this</code>的机制，实际原因是箭头函数根本没有自己的<code>this</code>，导致内部的<code>this</code>就是外层代码块的<code>this</code>。正是因为它没有<code>this</code>，所以也就不能用作构造函数。</p>
+<p>所以，箭头函数转成 ES5 的代码如下。</p>
+<pre><code class="language-javascript">// ES6
+function foo() {
+  setTimeout(() =&gt; {
+    console.log('id:', this.id);
+  }, 100);
+}
+
+// ES5
+function foo() {
+  var _this = this;
+
+  setTimeout(function () {
+    console.log('id:', _this.id);
+  }, 100);
+}
+</code></pre>
+<p>上面代码中，转换后的 ES5 版本清楚地说明了，箭头函数里面根本没有自己的<code>this</code>，而是引用外层的<code>this</code>。</p>
+<p>请问下面的代码之中有几个<code>this</code>？</p>
+<pre><code class="language-javascript">function foo() {
+  return () =&gt; {
+    return () =&gt; {
+      return () =&gt; {
+        console.log('id:', this.id);
+      };
+    };
+  };
+}
+
+var f = foo.call({id: 1});
+
+var t1 = f.call({id: 2})()(); // id: 1
+var t2 = f().call({id: 3})(); // id: 1
+var t3 = f()().call({id: 4}); // id: 1
+</code></pre>
+<p>上面代码之中，只有一个<code>this</code>，就是函数<code>foo</code>的<code>this</code>，所以<code>t1</code>、<code>t2</code>、<code>t3</code>都输出同样的结果。因为所有的内层函数都是箭头函数，都没有自己的<code>this</code>，它们的<code>this</code>其实都是最外层<code>foo</code>函数的<code>this</code>。</p>
+<p>除了<code>this</code>，以下三个变量在箭头函数之中也是不存在的，指向外层函数的对应变量：<code>arguments</code>、<code>super</code>、<code>new.target</code>。</p>
+<pre><code class="language-javascript">function foo() {
+  setTimeout(() =&gt; {
+    console.log('args:', arguments);
+  }, 100);
+}
+
+foo(2, 4, 6, 8)
+// args: [2, 4, 6, 8]
+</code></pre>
+<p>上面代码中，箭头函数内部的变量<code>arguments</code>，其实是函数<code>foo</code>的<code>arguments</code>变量。</p>
+<p>另外，由于箭头函数没有自己的<code>this</code>，所以当然也就不能用<code>call()</code>、<code>apply()</code>、<code>bind()</code>这些方法去改变<code>this</code>的指向。</p>
+<pre><code class="language-javascript">(function() {
+  return [
+    (() =&gt; this.x).bind({ x: 'inner' })()
+  ];
+}).call({ x: 'outer' });
+// ['outer']
+</code></pre>
+<p>上面代码中，箭头函数没有自己的<code>this</code>，所以<code>bind</code>方法无效，内部的<code>this</code>指向外部的<code>this</code>。</p>
+<p>长期以来，JavaScript 语言的<code>this</code>对象一直是一个令人头痛的问题，在对象方法中使用<code>this</code>，必须非常小心。箭头函数”绑定”<code>this</code>，很大程度上解决了这个困扰。</p>
+<h2 id="不适用场合">不适用场合</h2>
+<p>由于箭头函数使得<code>this</code>从“动态”变成“静态”，下面两个场合不应该使用箭头函数。</p>
+<p>第一个场合是定义对象的方法，且该方法内部包括<code>this</code>。</p>
+<pre><code class="language-javascript">const cat = {
+  lives: 9,
+  jumps: () =&gt; {
+    this.lives--;
+  }
+}
+</code></pre>
+<p>上面代码中，<code>cat.jumps()</code>方法是一个箭头函数，这是错误的。调用<code>cat.jumps()</code>时，如果是普通函数，该方法内部的<code>this</code>指向<code>cat</code>；如果写成上面那样的箭头函数，使得<code>this</code>指向全局对象，因此不会得到预期结果。这是因为对象不构成单独的作用域，导致<code>jumps</code>箭头函数定义时的作用域就是全局作用域。</p>
+<p>再看一个例子。</p>
+<pre><code class="language-javascript">globalThis.s = 21;
+
+const obj = {
+  s: 42,
+  m: () =&gt; console.log(this.s)
+};
+
+obj.m() // 21
+</code></pre>
+<p>上面例子中，<code>obj.m()</code>使用箭头函数定义。JavaScript 引擎的处理方法是，先在全局空间生成这个箭头函数，然后赋值给<code>obj.m</code>，这导致箭头函数内部的<code>this</code>指向全局对象，所以<code>obj.m()</code>输出的是全局空间的<code>21</code>，而不是对象内部的<code>42</code>。上面的代码实际上等同于下面的代码。</p>
+<pre><code class="language-javascript">globalThis.s = 21;
+globalThis.m = () =&gt; console.log(this.s);
+
+const obj = {
+  s: 42,
+  m: globalThis.m
+};
+
+obj.m() // 21
+</code></pre>
+<p>由于上面这个原因，对象的属性建议使用传统的写法定义，不要用箭头函数定义。</p>
+<p>第二个场合是需要动态<code>this</code>的时候，也不应使用箭头函数。</p>
+<pre><code class="language-javascript">var button = document.getElementById('press');
+button.addEventListener('click', () =&gt; {
+  this.classList.toggle('on');
+});
+</code></pre>
+<p>上面代码运行时，点击按钮会报错，因为<code>button</code>的监听函数是一个箭头函数，导致里面的<code>this</code>就是全局对象。如果改成普通函数，<code>this</code>就会动态指向被点击的按钮对象。</p>
+<p>另外，如果函数体很复杂，有许多行，或者函数内部有大量的读写操作，不单纯是为了计算值，这时也不应该使用箭头函数，而是要使用普通函数，这样可以提高代码可读性。</p>
+<h2 id="嵌套的箭头函数">嵌套的箭头函数</h2>
+<p>箭头函数内部，还可以再使用箭头函数。下面是一个 ES5 语法的多重嵌套函数。</p>
+<pre><code class="language-javascript">function insert(value) {
+  return {into: function (array) {
+    return {after: function (afterValue) {
+      array.splice(array.indexOf(afterValue) + 1, 0, value);
+      return array;
+    }};
+  }};
+}
+
+insert(2).into([1, 3]).after(1); //[1, 2, 3]
+</code></pre>
+<p>上面这个函数，可以使用箭头函数改写。</p>
+<pre><code class="language-javascript">let insert = (value) =&gt; ({into: (array) =&gt; ({after: (afterValue) =&gt; {
+  array.splice(array.indexOf(afterValue) + 1, 0, value);
+  return array;
+}})});
+
+insert(2).into([1, 3]).after(1); //[1, 2, 3]
+</code></pre>
+<p>下面是一个部署管道机制（pipeline）的例子，即前一个函数的输出是后一个函数的输入。</p>
+<pre><code class="language-javascript">const pipeline = (...funcs) =&gt;
+  val =&gt; funcs.reduce((a, b) =&gt; b(a), val);
+
+const plus1 = a =&gt; a + 1;
+const mult2 = a =&gt; a * 2;
+const addThenMult = pipeline(plus1, mult2);
+
+addThenMult(5)
+// 12
+</code></pre>
+<p>如果觉得上面的写法可读性比较差，也可以采用下面的写法。</p>
+<pre><code class="language-javascript">const plus1 = a =&gt; a + 1;
+const mult2 = a =&gt; a * 2;
+
+mult2(plus1(5))
+// 12
+</code></pre>
+<p>箭头函数还有一个功能，就是可以很方便地改写 λ 演算。</p>
+<pre><code class="language-javascript">// λ演算的写法
+fix = λf.(λx.f(λv.x(x)(v)))(λx.f(λv.x(x)(v)))
+
+// ES6的写法
+var fix = f =&gt; (x =&gt; f(v =&gt; x(x)(v)))
+               (x =&gt; f(v =&gt; x(x)(v)));
+</code></pre>
+<p>上面两种写法，几乎是一一对应的。由于 λ 演算对于计算机科学非常重要，这使得我们可以用 ES6 作为替代工具，探索计算机科学。</p>
+<h2 id="参考">参考</h2>
+<p>具体参考:<a href="https://es6.ruanyifeng.com/#docs/function">https://es6.ruanyifeng.com/#docs/function</a></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Hive分析函数grouping sets]]></title>
+        <id>https://dingdingtao.github.io/post/hive-fen-xi-han-shu-grouping-sets/</id>
+        <link href="https://dingdingtao.github.io/post/hive-fen-xi-han-shu-grouping-sets/">
+        </link>
+        <updated>2021-03-31T04:12:10.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="grouping-sets">grouping sets</h2>
+<p>在一个group by 的聚合查询中，根据不同的维度进行组合，我们可以选择性的去对维度聚合，也可以聚合所有维度，当维度上卷聚合时，维度值为 null，可用<code>ifnull</code>函数去赋值，得到一个新的汇总维度，其中<code>grouping__id</code>代表一个分组的唯一id。</p>
+<h2 id="cube">cube</h2>
+<p>在一个group by 的聚合查询中，根据所有维度组合进行聚合</p>
+<h2 id="rollup">rollup</h2>
+<p>是cube 的一个子集，以左边的维度为主，进行聚合</p>
+<p><code>grouping__id必须与grouping sets一起使用</code></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[群聊机器人]]></title>
+        <id>https://dingdingtao.github.io/post/qun-liao-ji-qi-ren/</id>
+        <link href="https://dingdingtao.github.io/post/qun-liao-ji-qi-ren/">
+        </link>
+        <updated>2021-03-31T04:06:29.000Z</updated>
+        <summary type="html"><![CDATA[<center>
+企业微信、钉钉开发文档，关于群聊机器人开发相关内容
+</center>
+]]></summary>
+        <content type="html"><![CDATA[<center>
+企业微信、钉钉开发文档，关于群聊机器人开发相关内容
+</center>
+<!-- more -->
+<p><a href="https://work.weixin.qq.com/help?doc_id=13376">企业微信群聊机器人文档</a></p>
+<p><a href="https://developers.dingtalk.com/document/app/document-upgrade-notice#/serverapi3/iydd5h">钉钉群聊机器人文档</a></p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Hive逻辑运算]]></title>
         <id>https://dingdingtao.github.io/post/hive-luo-ji-yun-suan/</id>
@@ -1549,557 +1881,6 @@ df.reset_index() 重新设置index，参数drop = True时会丢弃原来的索�
 numpy.zeros()</p>
 <h2 id="参考">参考</h2>
 <p>转自<a href="https://www.jianshu.com/p/840ba135df30">Python pandas用法</a></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[pymysql数据库连接]]></title>
-        <id>https://dingdingtao.github.io/post/pymysql-shu-ju-ku-lian-jie/</id>
-        <link href="https://dingdingtao.github.io/post/pymysql-shu-ju-ku-lian-jie/">
-        </link>
-        <updated>2021-03-02T06:35:56.000Z</updated>
-        <summary type="html"><![CDATA[<center>
-Python pymsql模块简单使用方法
-</center>
-]]></summary>
-        <content type="html"><![CDATA[<center>
-Python pymsql模块简单使用方法
-</center>
-<!-- more -->
-<h2 id="安装">安装</h2>
-<pre><code class="language-text">pip install pymysql
-</code></pre>
-<h2 id="使用">使用</h2>
-<h3 id="执行sql">执行sql</h3>
-<pre><code class="language-python">#!/usr/bin/env pytho
-# -*- coding:utf-8 -*-
-import pymysql
-  
-# 创建连接
-conn = pymysql.connect(host='127.0.0.1', port=3306, user='root', passwd='', db='tkq1', charset='utf8')
-# 创建游标
-cursor = conn.cursor()
-# 执行SQL，并返回收影响行数
-effect_row = cursor.execute(&quot;select * from tb7&quot;)
-# 执行SQL，并返回受影响行数
-#effect_row = cursor.execute(&quot;update tb7 set pass = '123' where nid = %s&quot;, (11,))
-# 执行SQL，并返回受影响行数,执行多次
-#effect_row = cursor.executemany(&quot;insert into tb7(user,pass,licnese)values(%s,%s,%s)&quot;, [(&quot;u1&quot;,&quot;u1pass&quot;,&quot;11111&quot;),(&quot;u2&quot;,&quot;u2pass&quot;,&quot;22222&quot;)])
-# 提交，不然无法保存新建或者修改的数据
-conn.commit()
-# 关闭游标
-cursor.close()
-# 关闭连接
-conn.close()
-</code></pre>
-<p><code>注意：存在中文的时候，连接需要添加charset='utf8'，否则中文显示乱码。</code></p>
-<h3 id="获取查询数据">获取查询数据</h3>
-<pre><code class="language-python">#! /usr/bin/env python
-# -*- coding:utf-8 -*-
-# __author__ = &quot;TKQ&quot;
-import pymysql
- 
-conn = pymysql.connect(host='127.0.0.1', port=3306, user='root', passwd='', db='tkq1')
-cursor = conn.cursor()
-cursor.execute(&quot;select * from tb7&quot;)
-# 获取剩余结果的第一行数据
-row_1 = cursor.fetchone()
-print row_1
-# 获取剩余结果前n行数据
-# row_2 = cursor.fetchmany(3)
-# 获取剩余结果所有数据
-# row_3 = cursor.fetchall()
-conn.commit()
-cursor.close()
-conn.close()
-</code></pre>
-<h3 id="获取新创建数据自增id">获取新创建数据自增ID</h3>
-<p>可以获取到最新自增的ID，也就是最后插入的一条数据ID</p>
-<pre><code class="language-python">#! /usr/bin/env python
-# -*- coding:utf-8 -*-
-# __author__ = &quot;TKQ&quot;
-import pymysql
- 
-conn = pymysql.connect(host='127.0.0.1', port=3306, user='root', passwd='', db='tkq1')
-cursor = conn.cursor()
-effect_row = cursor.executemany(&quot;insert into tb7(user,pass,licnese)values(%s,%s,%s)&quot;, [(&quot;u3&quot;,&quot;u3pass&quot;,&quot;11113&quot;),(&quot;u4&quot;,&quot;u4pass&quot;,&quot;22224&quot;)])
-conn.commit()
-cursor.close()
-conn.close()
-#获取自增id
-new_id = cursor.lastrowid      
-print new_id
-</code></pre>
-<h3 id="移动游标">移动游标</h3>
-<p>操作都是靠游标，那对游标的控制也是必须的，<code>在fetch数据时按照顺序进行，可以使用cursor.scroll(num,mode)来移动游标位置</code>，如：</p>
-<pre><code class="language-python">cursor.scroll(1,mode='relative') # 相对当前位置移动
-cursor.scroll(2,mode='absolute') # 相对绝对位置移动
-</code></pre>
-<h3 id="fetch数据类型">fetch数据类型</h3>
-<p>关于默认获取的数据是元祖类型，如果想要或者字典类型的数据，即：</p>
-<pre><code class="language-python">#! /usr/bin/env python
-# -*- coding:utf-8 -*-
-# __author__ = &quot;TKQ&quot;
-import pymysql
- 
-conn = pymysql.connect(host='127.0.0.1', port=3306, user='root', passwd='', db='tkq1')
-#游标设置为字典类型
-cursor = conn.cursor(cursor=pymysql.cursors.DictCursor)
-cursor.execute(&quot;select * from tb7&quot;)
-row_1 = cursor.fetchone()
-print row_1　　#{u'licnese': 213, u'user': '123', u'nid': 10, u'pass': '213'}
-conn.commit()
-cursor.close()
-conn.close()
-</code></pre>
-<h3 id="调用存储过程">调用存储过程</h3>
-<ul>
-<li>调用无参存储过程</li>
-</ul>
-<pre><code class="language-python">#! /usr/bin/env python
-# -*- coding:utf-8 -*-
-# __author__ = &quot;TKQ&quot;
- 
-import pymysql
- 
-conn = pymysql.connect(host='127.0.0.1', port=3306, user='root', passwd='', db='tkq1')
-#游标设置为字典类型
-cursor = conn.cursor(cursor=pymysql.cursors.DictCursor)
-#无参数存储过程
-cursor.callproc('p2')  #等价于cursor.execute(&quot;call p2()&quot;)
-row_1 = cursor.fetchone()
-print row_1
-conn.commit()
-cursor.close()
-conn.close()
-</code></pre>
-<ul>
-<li>调用有参存储过程</li>
-</ul>
-<pre><code class="language-python">#! /usr/bin/env python
-# -*- coding:utf-8 -*-
-# __author__ = &quot;TKQ&quot;
- 
-import pymysql
- 
-conn = pymysql.connect(host='127.0.0.1', port=3306, user='root', passwd='', db='tkq1')
-cursor = conn.cursor(cursor=pymysql.cursors.DictCursor)
-cursor.callproc('p1', args=(1, 22, 3, 4))
-#获取执行完存储的参数,参数@开头
-cursor.execute(&quot;select @p1,@_p1_1,@_p1_2,@_p1_3&quot;)  #{u'@_p1_1': 22, u'@p1': None, u'@_p1_2': 103, u'@_p1_3': 24}
-row_1 = cursor.fetchone()
-print row_1
-conn.commit()
-cursor.close()
-conn.close()
-</code></pre>
-<h2 id="关于pymysql防注入">关于pymysql防注入</h2>
-<h3 id="字符串拼接查询造成注入">字符串拼接查询，造成注入</h3>
-<ul>
-<li>正常查询语句：</li>
-</ul>
-<pre><code class="language-python">#! /usr/bin/env python
-# -*- coding:utf-8 -*-
-# __author__ = &quot;TKQ&quot;
-import pymysql
- 
-conn = pymysql.connect(host='127.0.0.1', port=3306, user='root', passwd='', db='tkq1')
-cursor = conn.cursor()
-user=&quot;u1&quot;
-passwd=&quot;u1pass&quot;
-#正常构造语句的情况
-sql=&quot;select user,pass from tb7 where user='%s' and pass='%s'&quot; % (user,passwd)
-#sql=select user,pass from tb7 where user='u1' and pass='u1pass'
-row_count=cursor.execute(sql) row_1 = cursor.fetchone()
-print row_count,row_1
-conn.commit()
-cursor.close()
-conn.close()
-</code></pre>
-<ul>
-<li>构造注入语句：</li>
-</ul>
-<pre><code class="language-python">#! /usr/bin/env python
-# -*- coding:utf-8 -*-
-# __author__ = &quot;TKQ&quot;
-import pymysql
- 
-conn = pymysql.connect(host='127.0.0.1', port=3306, user='root', passwd='', db='tkq1')
-cursor = conn.cursor()
-user=&quot;u1' or '1'-- &quot;
-passwd=&quot;u1pass&quot;
-sql=&quot;select user,pass from tb7 where user='%s' and pass='%s'&quot; % (user,passwd)
-#拼接语句被构造成下面这样，永真条件，此时就注入成功了。因此要避免这种情况需使用pymysql提供的参数化查询。
-#select user,pass from tb7 where user='u1' or '1'-- ' and pass='u1pass'
-row_count=cursor.execute(sql)
-row_1 = cursor.fetchone()
-print row_count,row_1
-conn.commit()
-cursor.close()
-conn.close()
-</code></pre>
-<h3 id="避免注入使用pymysql提供的参数化语句">避免注入，使用pymysql提供的参数化语句</h3>
-<ul>
-<li>正常参数化查询</li>
-</ul>
-<pre><code class="language-python">#! /usr/bin/env python
-# -*- coding:utf-8 -*-
-# __author__ = &quot;TKQ&quot;
- 
-import pymysql
- 
-conn = pymysql.connect(host='127.0.0.1', port=3306, user='root', passwd='', db='tkq1')
-cursor = conn.cursor()
-user=&quot;u1&quot;
-passwd=&quot;u1pass&quot;
-#执行参数化查询
-row_count=cursor.execute(&quot;select user,pass from tb7 where user=%s and pass=%s&quot;,(user,passwd))
-row_1 = cursor.fetchone()
-print row_count,row_1
-conn.commit()
-cursor.close()
-conn.close()
-</code></pre>
-<ul>
-<li>构造注入，参数化查询注入失败。</li>
-</ul>
-<pre><code class="language-python">#! /usr/bin/env python
-# -*- coding:utf-8 -*-
-# __author__ = &quot;TKQ&quot;
-import pymysql
- 
-conn = pymysql.connect(host='127.0.0.1', port=3306, user='root', passwd='', db='tkq1')
-cursor = conn.cursor()
-user=&quot;u1' or '1'-- &quot;
-passwd=&quot;u1pass&quot;
-#执行参数化查询
-row_count=cursor.execute(&quot;select user,pass from tb7 where user=%s and pass=%s&quot;,(user,passwd))
-#内部执行参数化生成的SQL语句，对特殊字符进行了加\转义，避免注入语句生成。
-# sql=cursor.mogrify(&quot;select user,pass from tb7 where user=%s and pass=%s&quot;,(user,passwd))
-# print sql
-#select user,pass from tb7 where user='u1\' or \'1\'-- ' and pass='u1pass'被转义的语句。
-row_1 = cursor.fetchone()
-print row_count,row_1
-conn.commit()
-cursor.close()
-</code></pre>
-<p><code>结论：excute执行SQL语句的时候，必须使用参数化的方式，否则必然产生SQL注入漏洞。</code></p>
-<h3 id="使用存mysql储过程动态执行sql防注入">使用存mysql储过程动态执行SQL防注入</h3>
-<p>使用MYSQL存储过程自动提供防注入，动态传入SQL到存储过程执行语句。</p>
-<pre><code class="language-SQL">delimiter \\
-DROP PROCEDURE IF EXISTS proc_sql \\
-CREATE PROCEDURE proc_sql (
-  in nid1 INT,
-  in nid2 INT,
-  in callsql VARCHAR(255)
-  )
-BEGIN
-  set @nid1 = nid1;
-  set @nid2 = nid2;
-  set @callsql = callsql;
-    PREPARE myprod FROM @callsql;
---   PREPARE prod FROM 'select * from tb2 where nid&gt;? and nid&lt;?';  传入的值为字符串，？为占位符
---   用@p1，和@p2填充占位符
-    EXECUTE myprod USING @nid1,@nid2;
-  DEALLOCATE prepare myprod;
-END\\
-delimiter ;
-</code></pre>
-<pre><code class="language-SQL">set @nid1=12;
-set @nid2=15;
-set @callsql = 'select * from tb7 where nid&gt;? and nid&lt;?';
-CALL proc_sql(@nid1,@nid2,@callsql)
-</code></pre>
-<p>pymsql中调用</p>
-<pre><code class="language-python">#! /usr/bin/env python
-# -*- coding:utf-8 -*-
-# __author__ = &quot;TKQ&quot;
-import pymysql
- 
-conn = pymysql.connect(host='127.0.0.1', port=3306, user='root', passwd='', db='tkq1')
-cursor = conn.cursor()
-mysql=&quot;select * from tb7 where nid&gt;? and nid&lt;?&quot;
-cursor.callproc('proc_sql', args=(11, 15, mysql))
-rows = cursor.fetchall()
-print rows #((12, 'u1', 'u1pass', 11111), (13, 'u2', 'u2pass', 22222), (14, 'u3', 'u3pass', 11113))
-conn.commit()
-cursor.close()
-conn.close()
-</code></pre>
-<h2 id="使用with简化连接过程">使用with简化连接过程</h2>
-<p>每次都连接关闭很麻烦，使用上下文管理，简化连接过程</p>
-<pre><code class="language-python">#! /usr/bin/env python
-# -*- coding:utf-8 -*-
-# __author__ = &quot;TKQ&quot;
- 
-import pymysql
-import contextlib
-#定义上下文管理器，连接后自动关闭连接
-@contextlib.contextmanager
-def mysql(host='127.0.0.1', port=3306, user='root', passwd='', db='tkq1',charset='utf8'):
-  conn = pymysql.connect(host=host, port=port, user=user, passwd=passwd, db=db, charset=charset)
-  cursor = conn.cursor(cursor=pymysql.cursors.DictCursor)
-  try:
-    yield cursor
-  finally:
-    conn.commit()
-    cursor.close()
-    conn.close()
- 
-# 执行sql
-with mysql() as cursor:
-  print(cursor)
-  row_count = cursor.execute(&quot;select * from tb7&quot;)
-  row_1 = cursor.fetchone()
-  print row_count, row_1
-</code></pre>
-<h2 id="参考">参考</h2>
-<p>使用方法参考[Python中操作mysql的pymysql模块详解](https:// www.jb51.net/article/92516.htm)</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Python常用模块&框架]]></title>
-        <id>https://dingdingtao.github.io/post/python-kuang-jia/</id>
-        <link href="https://dingdingtao.github.io/post/python-kuang-jia/">
-        </link>
-        <updated>2021-03-02T06:28:26.000Z</updated>
-        <summary type="html"><![CDATA[<center>
-整理包括Django、等框架
-</center>
-]]></summary>
-        <content type="html"><![CDATA[<center>
-整理包括Django、等框架
-</center>
-<!-- more -->
-<h2 id="python模块">Python模块</h2>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">模块</th>
-<th style="text-align:center">说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center"><a href="https://dingdingtao.github.io/post/pymysql-shu-ju-ku-lian-jie/">pymysql</a></td>
-<td style="text-align:center">数据库连接</td>
-</tr>
-<tr>
-<td style="text-align:center"><a href="https://dingdingtao.github.io/post/pandas-shu-ju-chu-li/">pandas</a></td>
-<td style="text-align:center">数据处理</td>
-</tr>
-</tbody>
-</table>
-<h2 id="python框架">Python框架</h2>
-<ul>
-<li><a href="https://dingdingtao.github.io/tag/Python/Django">Django</a></li>
-</ul>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Django参考]]></title>
-        <id>https://dingdingtao.github.io/post/django-can-kao/</id>
-        <link href="https://dingdingtao.github.io/post/django-can-kao/">
-        </link>
-        <updated>2021-03-02T06:19:22.000Z</updated>
-        <summary type="html"><![CDATA[<center>
-Django安装、创建项目、目录结构及简单使用方法
-</center>
-]]></summary>
-        <content type="html"><![CDATA[<center>
-Django安装、创建项目、目录结构及简单使用方法
-</center>
-<!-- more -->
-<h2 id="安装django">安装django</h2>
-<pre><code class="language-text">pip3 install Django==3.0.6 -i https://pypi.tuna.tsinghua.edu.cn/simple
-</code></pre>
-<h2 id="创建项目">创建项目</h2>
-<pre><code class="language-text">django-admin.py startproject testdj
-</code></pre>
-<p><strong>目录结构</strong></p>
-<pre><code class="language-text">|-- HelloWorld
-|   |-- __init__.py
-|   |-- asgi.py
-|   |-- settings.py
-|   |-- urls.py
-|   |-- wsgi.py
-|-- manage.py
-</code></pre>
-<p><strong>目录说明</strong></p>
-<ul>
-<li><code>HelloWorld</code>: 项目的容器。</li>
-<li><code>manage.py</code>: 一个实用的命令行工具，可让你以各种方式与该 Django 项目进行交互。</li>
-<li><code>HelloWorld/__init__.py</code>: 一个空文件，告诉 Python 该目录是一个 Python 包。</li>
-<li><code>HelloWorld/asgi.py</code>: 一个 ASGI 兼容的 Web 服务器的入口，以便运行你的项目。</li>
-<li><code>HelloWorld/settings.py</code>: 该 Django 项目的设置/配置。</li>
-<li><code>HelloWorld/urls.py</code>: 该 Django 项目的 URL 声明; 一份由 Django 驱动的网站&quot;目录&quot;。</li>
-<li><code>HelloWorld/wsgi.py</code>: 一个 WSGI 兼容的 Web 服务器的入口，以便运行你的项目。</li>
-</ul>
-<h2 id="启动">启动</h2>
-<pre><code class="language-text">python manage.py runserver [ip:port]
-</code></pre>
-<h2 id="视图">视图</h2>
-<p>创建视图文件HelloWorld/HelloWorld/views.py</p>
-<pre><code class="language-python">'''引入HttpResponse'''
-from django.http import HttpResponse
- '''视图函数'''
-def hello(request):
-    '''
-    
-    '''
-    return HttpResponse(&quot;Hello world ! &quot;)
-</code></pre>
-<h3 id="视图函数">视图函数</h3>
-<p>视图层中有两个重要的对象：<br>
-请求对象(request): 视图函数的固定第一参数。<br>
-响应对象(HttpResponse): 视图函数返回内容。</p>
-<p><strong>请求对象</strong><br>
-常用的 request 属性<br>
-<code>GET</code>: 数据类型是 QueryDict，一个类似于字典的对象，包含 HTTP GET 的所有参数。<br>
-有相同的键，就把所有的值放到对应的列表里。<br>
-取值格式：对象.方法。<br>
-get()：返回字符串，如果该键对应有多个值，取出该键的最后一个值。</p>
-<pre><code class="language-python">def runoob(request):
-    name = request.GET.get(&quot;name&quot;)
-    return HttpResponse('姓名：{}'.format(name))
-</code></pre>
-<p><code>POST</code>: 数据类型是 QueryDict，一个类似于字典的对象，包含 HTTP POST 的所有参数。<br>
-常用于 form 表单，form 表单里的标签 name 属性对应参数的键，value 属性对应参数的值。<br>
-取值格式： 对象.方法。<br>
-get()：返回字符串，如果该键对应有多个值，取出该键的最后一个值。</p>
-<pre><code class="language-python">def runoob(request):
-    name = request.POST.get(&quot;name&quot;)
-    return HttpResponse('姓名：{}'.format(name))
-</code></pre>
-<p><code>body</code>: 数据类型是二进制字节流，是原生请求体里的参数内容，在 HTTP 中用于 POST，因为 GET 没有请求体。<br>
-在 HTTP 中不常用，而在处理非 HTTP 形式的报文时非常有用，例如：二进制图片、XML、Json 等。</p>
-<pre><code class="language-python">def runoob(request):
-    name = request.body
-    print(name)
-    return HttpResponse(&quot;菜鸟教程&quot;)
-</code></pre>
-<p><code>path</code>: 获取 URL 中的路径部分(不包括域名端口等)，数据类型是字符串。</p>
-<pre><code class="language-python">def runoob(request):
-    name = request.path
-    print(name)
-    return HttpResponse(&quot;菜鸟教程&quot;)
-</code></pre>
-<p><code>method</code>:  获取当前请求的方式，数据类型是字符串，且结果为大写。</p>
-<pre><code class="language-python">def runoob(request):
-    name = request.method
-    print(name)
-    return HttpResponse(&quot;菜鸟教程&quot;)
-</code></pre>
-<p><strong>响应对象</strong><br>
-<code>HttpResponse()</code>: 返回文本，参数为字符串，字符串中写文本内容。如果参数为字符串里含有 html 标签，也可以渲染。</p>
-<p><code>render()</code>: 返回文本，第一个参数为 request，第二个参数为字符串（页面名称），第三个参数为字典（可选参数，向页面传递的参数：键为页面参数名，值为views参数名）。</p>
-<p><code>redirect()</code>：重定向，跳转新页面。参数为字符串，字符串中填写页面路径。一般用于 form 表单提交后，跳转到新页面。</p>
-<h2 id="url路由">URL路由</h2>
-<p>绑定 URL 与视图函数</p>
-<pre><code class="language-python">'''引入url'''
-from django.conf.urls import url
-'''从当前目录引入views视图文件'''
-from . import views
-'''配置url与视图对应关系'''
-urlpatterns = [
-    '''
-    url(请求路径, 视图函数)
-    '''
-    url(r'^$', views.hello),
-]
-</code></pre>
-<p><strong>路由</strong><br>
-<code>url()</code>: 普通路径和正则路径均可使用，需要自己手动添加正则首位限制符号。</p>
-<pre><code class="language-python">from django.conf.urls import url # 用 url 需要引入
-
-urlpatterns = [
-    url(r'^admin/$', admin.site.urls),
-    url(r'^index/$', views.index), # 普通路径
-    url(r'^articles/([0-9]{4})/$', views.articles), # 正则路径
-]
-</code></pre>
-<p><code>path()</code>：用于普通路径，不需要自己手动添加正则首位限制符号，底层已经添加。<br>
-<code>re_path</code>：用于正则路径，需要自己手动添加正则首位限制符号。</p>
-<pre><code class="language-python">from django.urls import re_path # 用re_path 需要引入
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('index/', views.index), # 普通路径
-    re_path(r'^articles/([0-9]{4})/$', views.articles), # 正则路径
-]
-</code></pre>
-<p><strong>路径分组</strong></p>
-<p>正则路径中的无名分组</p>
-<pre><code class="language-python">urlpatterns = [
-    path('admin/', admin.site.urls),
-    re_path(&quot;^index/([0-9]{4})/$&quot;, views.index),
-]
-
-from django.shortcuts import HttpResponse
-
-def index(request，year):
-    print(year) # 一个形参代表路径中一个分组的内容，按顺序匹配
-    return HttpResponse('菜鸟教程')
-
-</code></pre>
-<p>正则路径中的有名分组</p>
-<pre><code class="language-python">urlpatterns = [
-    path('admin/', admin.site.urls),
-    re_path(&quot;^index/(?P[0-9]{4})/(?P[0-9]{2})/$&quot;, views.index),
-]
-
-from django.shortcuts import HttpResponse
-def index(request, year, month):
-    print(year,month) # 一个形参代表路径中一个分组的内容，按关键字对应匹配
-    return HttpResponse('菜鸟教程')
-</code></pre>
-<p><strong>路由分发</strong><br>
-存在问题：Django 项目里多个app目录共用一个 urls 容易造成混淆，后期维护也不方便。<br>
-解决：使用路由分发（include），让每个app目录都单独拥有自己的 urls。<br>
-步骤：</p>
-<ol>
-<li>在每个 app 目录里都创建一个 urls.py 文件。</li>
-<li>在项目名称目录下的 urls 文件里，统一将路径分发给各个 app 目录。</li>
-</ol>
-<pre><code class="language-python">from django.contrib import admin
-from django.urls import path,include # 从 django.urls 引入 include
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path(&quot;app01/&quot;, include(&quot;app01.urls&quot;)),
-    path(&quot;app02/&quot;, include(&quot;app02.urls&quot;)),
-]
-</code></pre>
-<p><strong>反向解析</strong></p>
-<p><strong>命名空间</strong></p>
-<h2 id="模版">模版</h2>
-<p><strong>模版目录</strong><br>
-项目目录下创建templates目录,修改 TEMPLATES 中的 DIRS 为 [os.path.join(BASE_DIR, 'templates')],将模版目录修改为templates。</p>
-<pre><code class="language-conf">TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')], # 修改位置
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-            ],
-        },
-    },
-]
-</code></pre>
-<p><strong>创建模版文件</strong><br>
-参考<a href="https://www.runoob.com/django/django-template.html">模版标签</a></p>
-<p><strong>向模板提交数据</strong></p>
-<pre><code class="language-python">from django.shortcuts import render
- 
-def runoob(request):
-    context          = {}
-    context['hello'] = 'Hello World!'
-    return render(request, 'runoob.html', context)
-</code></pre>
-<h2 id="参考">参考</h2>
-<p><a href="https://www.runoob.com/django/django-tutorial.html">django参考</a></p>
 ]]></content>
     </entry>
 </feed>

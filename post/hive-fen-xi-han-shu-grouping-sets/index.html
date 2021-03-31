@@ -3,11 +3,11 @@
     <meta charset="utf-8" />
 <!-- <meta name="viewport" content="width=device-width, initial-scale=1" /> -->
 <meta name="viewport" content="width=device-width" /> 
-<title>Hive列转行 | dingdingtao的个人静态网站</title>
+<title>Hive分析函数grouping sets | dingdingtao的个人静态网站</title>
 <link rel="shortcut icon" href="https://dingdingtao.github.io/favicon.ico?v=1617172804781">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://dingdingtao.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="Hive列转行 | dingdingtao的个人静态网站 - Atom Feed" href="https://dingdingtao.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="Hive分析函数grouping sets | dingdingtao的个人静态网站 - Atom Feed" href="https://dingdingtao.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 <!-- gitalk -->
@@ -57,12 +57,8 @@
 
 
 
-    <meta name="description" content="列转行
-collect_set
-concat_ws(',',collect_set(column)) ：去重
-collect_list
-concat_ws(',',collect_list(column)) ：不去重
-..." />
+    <meta name="description" content="grouping sets
+在一个group by 的聚合查询中，根据不同的维度进行组合，我们可以选择性的去对维度聚合，也可以聚合所有维度，当维度上卷聚合时，维度值为 null，可用ifnull函数去赋值，得到一个新的汇总维度，其中grou..." />
     <meta name="keywords" content="Hive" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -129,11 +125,11 @@ concat_ws(',',collect_list(column)) ：不去重
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              Hive列转行
+              Hive分析函数grouping sets
             </h2>
             <div class="post-info">
               <span>
-                2021-03-01
+                2021-03-31
               </span>
               <span>
                 1 min read
@@ -147,19 +143,22 @@ concat_ws(',',collect_list(column)) ：不去重
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <h1 id="列转行">列转行</h1>
-<h2 id="collect_set">collect_set</h2>
-<p>concat_ws(',',collect_set(column)) ：去重</p>
-<h2 id="collect_list">collect_list</h2>
-<p>concat_ws(',',collect_list(column)) ：不去重</p>
+                <h2 id="grouping-sets">grouping sets</h2>
+<p>在一个group by 的聚合查询中，根据不同的维度进行组合，我们可以选择性的去对维度聚合，也可以聚合所有维度，当维度上卷聚合时，维度值为 null，可用<code>ifnull</code>函数去赋值，得到一个新的汇总维度，其中<code>grouping__id</code>代表一个分组的唯一id。</p>
+<h2 id="cube">cube</h2>
+<p>在一个group by 的聚合查询中，根据所有维度组合进行聚合</p>
+<h2 id="rollup">rollup</h2>
+<p>是cube 的一个子集，以左边的维度为主，进行聚合</p>
+<p><code>grouping__id必须与grouping sets一起使用</code></p>
 
               </div>
               <div class="toc-container">
                 <ul class="markdownIt-TOC">
-<li><a href="#%E5%88%97%E8%BD%AC%E8%A1%8C">列转行</a>
+<li>
 <ul>
-<li><a href="#collect_set">collect_set</a></li>
-<li><a href="#collect_list">collect_list</a></li>
+<li><a href="#grouping-sets">grouping sets</a></li>
+<li><a href="#cube">cube</a></li>
+<li><a href="#rollup">rollup</a></li>
 </ul>
 </li>
 </ul>
@@ -172,9 +171,9 @@ concat_ws(',',collect_list(column)) ：不去重
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://dingdingtao.github.io/post/hive-si-she-wu-ru/">
+            <a href="https://dingdingtao.github.io/post/qun-liao-ji-qi-ren/">
               <h3 class="post-title">
-                Hive四舍五入
+                群聊机器人
               </h3>
             </a>
           </div>

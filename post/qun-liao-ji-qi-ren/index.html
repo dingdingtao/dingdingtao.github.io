@@ -1,13 +1,13 @@
 <html>
   <head>
-  <meta charset="utf-8" />
+    <meta charset="utf-8" />
 <!-- <meta name="viewport" content="width=device-width, initial-scale=1" /> -->
 <meta name="viewport" content="width=device-width" /> 
-<title>Maven | dingdingtao的个人静态网站</title>
+<title>群聊机器人 | dingdingtao的个人静态网站</title>
 <link rel="shortcut icon" href="https://dingdingtao.github.io/favicon.ico?v=1617172804781">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://dingdingtao.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="Maven | dingdingtao的个人静态网站 - Atom Feed" href="https://dingdingtao.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="群聊机器人 | dingdingtao的个人静态网站 - Atom Feed" href="https://dingdingtao.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 <!-- gitalk -->
@@ -57,7 +57,16 @@
 
 
 
-  <meta name="description" content="dingdingtao的个人静态网站" />
+    <meta name="description" content="
+企业微信、钉钉开发文档，关于群聊机器人开发相关内容
+
+
+企业微信群聊机器人文档
+钉钉群聊机器人文档
+..." />
+    <meta name="keywords" content="其他" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
   <body>
     <div class="main">
@@ -118,68 +127,54 @@
   </div>
 </div>
 
-        <div class="current-tag-container">
-            <h2 class="title">
-                标签：# Maven
-            </h2> 
-        </div>
-        <div class="post-container">
-  
-    <article class="post">
-      <a href="https://dingdingtao.github.io/post/maven-pom-biao-qian-da-quan-xiang-jie/">
-        <h2 class="post-title">Maven-POM标签大全详解</h2>
-      </a>
-      <div class="post-info">
-        <span>
-          2021-03-03
-        </span>
-        <span>
-          33 min read
-        </span>
-        
-          <a href="https://dingdingtao.github.io/tag/Java/Maven/" class="post-tag">
-            # Maven
-          </a>
-        
-      </div>
-      
-      <div class="post-abstract">
-        
-      </div>
-    </article>
-  
-    <article class="post">
-      <a href="https://dingdingtao.github.io/post/maven-huan-jing-pei-zhi/">
-        <h2 class="post-title">Maven环境配置</h2>
-      </a>
-      <div class="post-info">
-        <span>
-          2021-03-03
-        </span>
-        <span>
-          1 min read
-        </span>
-        
-          <a href="https://dingdingtao.github.io/tag/Java/Maven/" class="post-tag">
-            # Maven
-          </a>
-        
-      </div>
-      
-      <div class="post-abstract">
-        <center>
-maven安装和环境变量配置
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              群聊机器人
+            </h2>
+            <div class="post-info">
+              <span>
+                2021-03-31
+              </span>
+              <span>
+                1 min read
+              </span>
+              
+                <a href="https://dingdingtao.github.io/tag/Other/" class="post-tag">
+                  # 其他
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <center>
+企业微信、钉钉开发文档，关于群聊机器人开发相关内容
 </center>
+<!-- more -->
+<p><a href="https://work.weixin.qq.com/help?doc_id=13376">企业微信群聊机器人文档</a></p>
+<p><a href="https://developers.dingtalk.com/document/app/document-upgrade-notice#/serverapi3/iydd5h">钉钉群聊机器人文档</a></p>
 
-      </div>
-    </article>
-  
-</div>
+              </div>
+              <div class="toc-container">
+                
+              </div>
+            </div>
+          </article>
+        </div>
 
-        <div class="pagination-container">
-  
-  
-</div>
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://dingdingtao.github.io/post/hive-luo-ji-yun-suan/">
+              <h3 class="post-title">
+                Hive逻辑运算
+              </h3>
+            </a>
+          </div>
+        
+
+        
 
         <div class="site-footer">
   Please&nbsp;&nbsp;contact&nbsp;&nbsp;the&nbsp;&nbsp;authors&nbsp;&nbsp;<a href="https://github.com/dingdingtao" target="_blank">dingdingtao</a>&nbsp;&nbsp;if&nbsp;&nbsp;you&nbsp;&nbsp;have&nbsp;&nbsp;further&nbsp;&nbsp;questions
@@ -190,5 +185,46 @@ maven安装和环境变量配置
 
       </div>
     </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
   </body>
 </html>
